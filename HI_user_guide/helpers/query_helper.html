@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array Helper : HerbIgniter User Guide</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<script type="text/javascript" src="../nav/nav.js"></script>
+<script type="text/javascript" src="../nav/prototype.lite.js"></script>
+<script type="text/javascript" src="../nav/moo.fx.js"></script>
+<script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Herb' />
+<meta name='description' content='HerbIgniter User Guide' />
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>HerbIgniter User Guide Version 1.7.2</h1></td>
+<td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://gudagi.net/herbigniter/">HerbIgniter Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+Menu Helper
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="gudagi.net/herbigniter/HI_user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Query Helper</h1>
+
+<p>The Query Helper file contains functions that assist in returning data using MySQL queries. It also includes some bitvector mathematics (setting boolean toggles by bit on an integer). Use the <em>mysql_</em>*() functions only on pages that are not HerbIgniter-based (you can require this helper as a library in raw PHP), and you can also use the equivalent functions inside HerbIgniter (namely: find, find_like, find_all, get_related, etc)</p>
+
+
+<h2>Loading this Helper</h2>
+
+<p>This helper is loaded using the following code:</p>
+<code>$this->load->helper('query');</code>
+
+<p>The following functions are available:</p>
+
+<h2>flag( bit, flag )</h2>
+
+<p>Returns true if <em>bit</em> is set on <em>flag</em>. <em>Bit</em> can be compound (a series of bits such as 1, 2, 4, 8, 32 but not 16, checked against the flag variable). A bitvector is a power of two (1,2,4,8,16,32,64,...)</p>
+<p>Example:</p>
+
+<p><code> if ( !flag( SOME_CONSTANT_BIT, $flags ) ) return true;<br />
+  else return false;
+</code> </p>
+<h2>on( bit, flag )</h2>
+
+<p>Returns true if <em>bit</em> is set on <em>flag</em>. <em>Bit</em> can be compound (a series of bits such as 1, 2, 4, 8, 32 but not 16, checked against the flag variable).</p>
+<code>if ( !on( SOME_CONSTANT_BIT, $flags ) ) return true;<br />
+else return false; </code>
+<h2>off( bit, flag )</h2>
+<p>Returns true if <em>bit</em> is NOT set on <em>flag</em>. <em>Bit</em> can be compound (a series of bits such as 1, 2, 4, 8, 32 but not 16, checked against the flag variable).</p>
+<code>if ( off( SOME_CONSTANT_BIT, $flags ) ) return true;<br />
+else return false; </code>
+<h2>bittoggle( bit, flag )</h2>
+<p>Toggles the status of a <em>bit</em> on a <em>flag</em> vector.</p>
+<code> bittoggle( SOME_CONSTANT_BIT, $</code>
+<h2>adt( strlist )</h2>
+<p>Adds the tick (`) to a string that looks like &quot;this, that, the, other, thing&quot; becomes &quot;`this`,`that`,`the`,`other`,`thing`&quot;</p>
+<code> $result_str = adt( &quot;this, that, the, other, thing&quot;);</code>
+<h2>adq( strlist )</h2>
+<p>Adds apostrophes (') to a string that looks like &quot;this, that, the, other, thing&quot; becomes &quot;'this','that'...&quot;</p>
+<code>$result_str = adq( $strlist );</code>
+<h2>sq( str )</h2>
+<p>Slash quotes: fixes \&quot; and \' to be &quot; and ' (the sourceforge bug)</p>
+<code>$result_str = sq( $str );</code>
+<h2>msq( str )</h2>
+<p>Make slash quotes: fixes &quot; and ' to be \&quot; and \' (to include in javascript)</p>
+<code>$result_str = msq( $str );</code>
+<h2>qs( str )</h2>
+<p> Make slash quotes: fixes &quot;  to be \&quot; (to include in javascript)<br />
+Fixes \n to be \\n</p>
+<code>$result_str = qs( $str );</code>
+<h2>err( die, query=&quot;&quot; )</h2>
+<p> Displays the die() message evalulating mysql_query() (or any other error message); setting the global $err_file tells you the originating file that the MySQL is complaining in.</p>
+<code>$res = mysql_query($query,$target_db) or err(mysql_error(),$query);</code>
+<h2>mysql_get_last_id( table )</h2>
+<p> Acquires the <em>last_insert_id</em> of a MySQL table. Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>$last_id = mysql_get_last_id( &quot;users&quot; );</code>
+<h2>mysql_insert( table, field, value )</h2>
+<p> Does a simple, single-value insert into a table and returns the resulting mysql resource.  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>mysql_insert( &quot;users&quot;, &quot;id&quot;, 7 );</code>
+<h2>mysql_set( table, id, field, value )</h2>
+<p> Updates a single value in a table row. Assumes your table has a primary key named <em>id</em> -  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>mysql_set( &quot;users&quot;, $user_id, &quot;username&quot;, &quot;Zephyr667&quot; );</code>
+<h2>mysql_now( table, id, field )</h2>
+<p> Inserts the current timestamp into a DATETIME or TIMESTAMP field in a MySQL database.  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>mysql_now( &quot;users&quot;, $user_id, &quot;modified&quot; );</code>
+<h2>mysql_activate( table, id, bitvector, bit )</h2>
+<p> Activates (or leaves unchanged if already set) an arbitrary <em>bit</em> on a field that acts like a <em>bitvector</em>.  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>define( SOME_FLAG_THAT_MEANS_USER_IS_BANNED, 1 );<br />
+<br />
+mysql_activate( &quot;users&quot;, $user_id, &quot;access_flags&quot;, SOME_FLAG_THAT_MEANS_USER_IS_BANNED );</code>
+<h2>mysql_deactivate( table, id, bitvector, bit )</h2>
+<p>Deactivates (or leaves unchanged if already unset) an arbitrary <em>bit</em> on a field that acts like a <em>bitvector</em>.  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>define( SOME_FLAG_THAT_MEANS_USER_IS_BANNED, 1 );<br />
+<br />
+mysql_deactivate( &quot;users&quot;, $user_id, &quot;access_flags&quot;, SOME_FLAG_THAT_MEANS_USER_IS_BANNED );</code>
+<h2>mysql_toggle( table, id, bitvector, bit )</h2>
+<p>Toggles (or leaves unchanged if already unset) an arbitrary <em>bit</em> on a field that acts like a <em>bitvector</em>.  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>define( SOME_FLAG_THAT_MEANS_USER_IS_BANNED, 1 );<br />
+<br />
+mysql_toggle( &quot;users&quot;, $user_id, &quot;access_flags&quot;, SOME_FLAG_THAT_MEANS_USER_IS_BANNED );</code>
+<h2>mysql_flag_value( table, id, field )</h2>
+<p> Returns the value of a field in a table, used mainly for requesting a single value without getting the entire resource.  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>$flags = mysql_flag_value( &quot;users&quot;, $user_id, &quot;access_flags&quot; );</code>
+<h2>mysql_has( table, id, field, bit ) </h2>
+<p>This function tests for the presence of a <em>bit</em> on a flag field.  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<p><code>if ( mysql_has( &quot;users&quot;, $user_id, &quot;access_flags', SOME_FLAG_THAT_MEANS_USER_IS_BANNED ) ) {...} else {...}</code> </p>
+<h2>mysql_add_field( table, field, sql_type )</h2>
+<p>Adds a field to a MYSQL table.  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>mysql_add_field( &quot;users&quot;, &quot;brief_bio&quot;, &quot;VARCHAR(255)&quot; );</code>
+<h2>mysql_find( table, field, value, other=&quot;&quot; )</h2>
+<p> Finds the first row returned from a table with a particular field and value. Returns a single array that contains 1 table entry and is indexed by <strong>row['field']</strong>.  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>$row=mysql_find( &quot;users&quot;, &quot;username&quot;, &quot;jrichards&quot; );<br />
+<br />
+// Use the optional fourth parameter to filter more specifically.<br />
+$row=mysql_find( &quot;users&quot;, &quot;username&quot;, &quot;jrichards&quot;, &quot; AND WHERE modified=NOW() ORDER BY `username` LIMIT 1&quot; );
+</code>
+<h2>mysql_find_like( table, field, value, filter=&quot;&quot; )</h2>
+<p>Finds the all rows returned from a table with particular fields and values. Returns an array, similar to <em>$this-&gt;db-&gt;query</em>() -  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>// Returns all rows in table `cars` where field `brand` is 'Ford'<br />
+$rows=mysql_find_like( &quot;cars&quot;, &quot;brand&quot;, &quot;Ford&quot;  );<br />
+<br />
+// Returns only rows in table `cars` matching brand `Ford` released after the year 1997
+<br />
+$rows=mysql_find_like( &quot;cars&quot;, &quot;brand&quot;, &quot;Ford&quot;, &quot; AND `released`&gt;1997 ORDER BY `released` ASC LIMIT 100&quot; );</code>
+<h2>mysql_find_month( table, field, month, year, filter=&quot;&quot; )</h2>
+<p> Finds all items in a table by a date field which fall within a single month in a single year. Returns an array, similar to <em>$this-&gt;db-&gt;query</em>() -  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>$september09 = mysql_find_month( &quot;logins&quot;, &quot;time&quot;, 9, 2009 );</code>
+<h2>mysql_find_all( table, filter=&quot;&quot; )</h2>
+<p> Returns every entry in a table. You can also use this as a basic query generator. Returns an array, similar to <em>$this-&gt;db-&gt;query</em>() -  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>$table = mysql_find_all( &quot;users&quot; );<br />
+<br />
+// Specify subsets...<br />
+$table = mysql_find_all( &quot;users&quot;, &quot; WHERE `username` LIKE '%john%'&quot; );
+<br />
+<br />
+// Other queries...
+<br />
+// Specify subsets...<br />
+$table = mysql_find_all( &quot;users&quot;, &quot; WHERE `username` LIKE '%john%' AND `age`&gt;17 LIMIT 5&quot; ); <br />
+</code>
+<h2>mysql_get_related( table, id, val )</h2>
+<p> Just like &quot;find_like&quot; but cannot be expanded.</p>
+<code>// Returns all rows in table `cars` where field `brand` is 'Ford'<br />
+$rows=mysql_get_related( &quot;cars&quot;, &quot;brand&quot;, &quot;Ford&quot;  );<br />
+</code>
+<h2>mysql_find_sorted( table, order_by, limit, asc_desc=&quot;DESC&quot; )</h2>
+<p> Returns everything in a table ordered by a field within a particular limit that is greater than 0, ASCending or DESCending.  Uses the global<strong> $target_db</strong>, which must be set to an active MySQL database connection.</p>
+<code>$sorted = mysql_find_sorted( &quot;users&quot;, &quot;username&quot;, 10, &quot;ASC&quot; );</code>
+<h2>mysql_to_array($res)</h2>
+<p> Converts a raw mysql resource (returned by <em>mysql_query</em>() ) to an array. </p>
+<code>$array = mysql_to_array( mysql_query ( $db_conn, $somequery ) ) ;</code>
+<h2>find_like( table, id, value, filter=&quot;&quot; )</h2>
+<p> Uses HerbIgniter's $this-&gt;db-&gt;query() to execute a SELECT query.</p>
+<code>// Returns all rows in table `cars` where field `brand` is 'Ford'<br />
+$rows=find_like( &quot;cars&quot;, &quot;brand&quot;, &quot;Ford&quot;  );<br />
+<br />
+// Returns only rows in table `cars` matching brand `Ford` released after the year 1997 <br />
+$rows=find_like( &quot;cars&quot;, &quot;brand&quot;, &quot;Ford&quot;, &quot; AND `released`&gt;1997 ORDER BY `released` ASC LIMIT 100&quot; );</code>
+<h2>  find_similar( table, id, value, filter=&quot;&quot; )</h2>
+<p> Identical to <em>find_like</em> (above)</p>
+<code>// Returns all rows in table `cars` where field `brand` is 'Ford'<br />
+$rows=find_similar( &quot;cars&quot;, &quot;brand&quot;, &quot;Ford&quot;  );<br />
+<br />
+// Returns only rows in table `cars` matching brand `Ford` released after the year 1997 <br />
+$rows=find_similar( &quot;cars&quot;, &quot;brand&quot;, &quot;Ford&quot;, &quot; AND `released`&gt;1997 ORDER BY `released` ASC LIMIT 100&quot; );</code>
+<h2>find_all( table, filter=&quot;&quot; )</h2>
+<p>Returns every entry in a table. You can also use this as a basic query generator. Returns an array, similar to <em>$this-&gt;db-&gt;query</em>() </p>
+<code>$table = find_all( &quot;users&quot; );<br />
+<br />
+// Specify subsets...<br />
+$table = find_all( &quot;users&quot;, &quot; WHERE `username` LIKE '%john%'&quot; ); <br />
+<br />
+// Other queries... <br />
+// Specify subsets...<br />
+$table = find_all( &quot;users&quot;, &quot; WHERE `username` LIKE '%john%' AND `age`&gt;17 LIMIT 5&quot; ); </code>
+<h2>find_month( table, field, month, year, filter=&quot;&quot; )</h2>
+<p>Finds all items in a table by a date field which fall within a single month in a single year. Returns an array, similar to <em>$this-&gt;db-&gt;query</em>() </p>
+<code>$september09 = mysql_find_month( &quot;logins&quot;, &quot;time&quot;, 9, 2009 );</code>
+<h2>insert( table, field, value )</h2>
+<p>Does a simple, single-value insert into a table and returns the <em>last_insert_id</em></p>
+<code>insert( &quot;users&quot;, &quot;id&quot;, 7 );</code>
+<h2>new_id( table, primary_key=&quot;id&quot; )</h2>
+<p>Attempts to calculate the <em>next_insert_id</em></p>
+<code>$next_id = new_id( &quot;users&quot; );</code>
+<h2>multiinsert( $table, [field, value ... ])</h2>
+<p> Discretized insert statement that executes a database query, returning the <em>last_insert_id</em></p>
+<code>$user_id = multiinsert( &quot;users&quot;, &quot;username&quot;, &quot;MMoore&quot;, &quot;first_name&quot;, &quot;Michael&quot;, &quot;last_name&quot;, &quot;Moore&quot; );</code>
+<h2>multiupdate( table, id, [field, value ... ])</h2>
+<p> Discretized insert statement that executes a database query</p>
+<code>multiupdate( &quot;users&quot;, $user_id, &quot;username&quot;, &quot;MikeyMoore&quot;, &quot;first_name&quot;, &quot;Mikey&quot; );</code>
+<h2>set( table, id, field, value )</h2>
+<p> Sets a table by primary key <em>id</em>, a field and value.</p>
+<code>set( &quot;users&quot;, $user_id, &quot;username&quot;, &quot;Mikey420&quot; );</code>
+<h2>now( table, id, field )</h2>
+<p> Updates a timestamp field in a table row to the current time.</p>
+<code>now( &quot;users&quot;, $user_id, &quot;logged_off&quot; );</code>
+<h2>activate( table, id, field, bit )</h2>
+<p> Activates a <em>flag</em> on <em>bit</em> in a <em>table</em> by <em>id</em></p>
+<code>activate( &quot;users&quot;, $user_id, &quot;flags&quot;, FLAG_USER_IS_LOGGED_OUT );</code>
+<h2>deactivate( table, id, field, bit )</h2>
+<p> Bitvector deactivation (opposite of <em>activate</em>)</p>
+<code>deactivate( &quot;users&quot;, $user_id, &quot;flags&quot;, FLAG_USER_IS_LOGGED_IN );</code>
+<h2>toggle( table, id, field, bit )</h2>
+<p>Bitvector toggling; toggles <em>bit</em> in <em>field</em> on <em>table</em> row with <em>id</em></p>
+<code>toggle( &quot;users&quot;, $user_id, &quot;flags&quot;, FLAG_ONLINE_STATUS );</code>
+<h2>flag_value( table, id, field )</h2>
+<p> You can also thing of this as &quot;get()&quot;, the opposite of &quot;set()&quot;, but its also very much like the mysql_flag_value() function. It returns a flag or value from a field in a row.</p>
+<code>$flags = flag_value( &quot;users&quot;, $user_id, &quot;flags&quot; );</code>
+<h2>has( table, id, field, bit )</h2>
+<p> Checks to see if a <em>table</em> at <em>id</em> with <em>field</em> has <em>bit</em>.</p>
+<code>$flags = flag_value( &quot;users&quot;, $user_id, &quot;flags&quot; );</code>
+<h2><br />
+  find( table, id, value, filter=&quot;&quot; )</h2>
+<p>Finds the first row returned from a table with a particular field and value. Returns a single array that contains 1 table entry and is indexed by <strong>row['field']</strong>.</p>
+<code>$row=find( &quot;users&quot;, &quot;username&quot;, &quot;jrichards&quot; );<br />
+<br />
+// Use the optional fourth parameter to filter more specifically.<br />
+$row=find( &quot;users&quot;, &quot;username&quot;, &quot;jrichards&quot;, &quot; AND WHERE modified=NOW() ORDER BY `username` LIMIT 1&quot; ); </code>
+<h2>delete( table, id, matching )</h2>
+<p> Deletes a row from a table. Use with caution!</p>
+<code>delete( &quot;users&quot;, &quot;username&quot;, &quot;Mikey420&quot; );</code>
+<h2>yes( table, id, field, ynfield )</h2>
+<p> Returns true when a yes/no is set to yes</p>
+<code>if ( yes( &quot;users&quot;, &quot;id&quot;, $user_id, &quot;is_active&quot; ) ) {...} else {...}</code>
+<h2>no( table, id, field, ynfield )</h2>
+<p>Returns true when a yes/no is set to no</p>
+<code>if ( no( &quot;users&quot;, &quot;id&quot;, $user_id, &quot;is_active&quot; ) ) {...} else {...}</code></div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+Previous Topic:&nbsp;&nbsp; <a href="../libraries/zip.html">Zip Encoding Class</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+Next Topic:&nbsp;&nbsp;<a href="compatibility_helper.html">Compatibility Helper</a></p>
+<p><a href="http://gudagi.net/herbigniter/">HerbIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://gudagi.com/">Gudagi</a></p>
+</div>
+
+</body>
+</html>

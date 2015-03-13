@@ -1,0 +1,236 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array Helper : HerbIgniter User Guide</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<script type="text/javascript" src="../nav/nav.js"></script>
+<script type="text/javascript" src="../nav/prototype.lite.js"></script>
+<script type="text/javascript" src="../nav/moo.fx.js"></script>
+<script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Herb' />
+<meta name='description' content='HerbIgniter User Guide' />
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>HerbIgniter User Guide Version 1.7.2</h1></td>
+<td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://gudagi.net/herbigniter/">HerbIgniter Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+AJAX Helper
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="gudagi.net/herbigniter/HI_user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>AJAX Helper</h1>
+
+<p>The AJAX Helper file contains functions that assist in working with AJAX. AJAX means requests are sent from the browser to repopulate areas, retreive data, etc. It is used to create more advance graphical / interactive user interfaces. There are a couple of terms that HerbIgniter uses to describe what's going on.</p>
+<p><strong>JSID</strong>: A javascript &quot;id&quot; -- that is to say, literally a piece of a function name (something that does not begin with a number) that is used to differentiate atomic AJAX code.<br />
+  <strong>AJID</strong>: An AJAX &quot;id&quot; which is really the <em>id</em> attribute of a piece of HTML that is attached to a &lt;div&gt;, &lt;span&gt; or other tag.</p>
+<p>To make this Helper easier to use, we've made transparent functions that make these special strings. The strings are then passed to, or generated within, the atomic AJAX functions provided. This makes it possible to avoid using Javascript while developing basic AJAX-enabled widgets and other remote-HTTP functionality such as triggering other &quot;headless&quot; PHP scripts.</p>
+<p><em>You would use this helper to:</em> create an area in the page that refreshes when clicked, create an area in a page that expands a region when clicked, refresh results in a particular page region based on form input, automatically update an area of a page with fresh results at a given time interval.</p>
+<p>Since AJAX is a late-comer to web functionality, we have done our best to provide stability over minification. We assume if you are using a browser that uses AJAX, that your machine was built after 1996 and can handle a few extra bits over your network pipe. Some of the JS it generates is minified. It requires the /js/ folder that comes with HerbIgniter, and it also provides some simple script.ac.ul.us wrappers. More jQuery-type stuff is handled in the <a href="projax.html">Projax Helper</a>.</p>
+<p>The AJAX Helper (optionally, and preferably) uses the <a href="../libraries/page.html">Page</a> object.</p>
+<p>This helper addresses the following types of AJAX operations:</p>
+<ol>
+  <li>AJAX that is triggered by link</li>
+  <li>AJAX that is triggered by a form submit</li>
+  <li>AJAX that is called on regular time intervals</li>
+  <li>AJAX that is triggered by a jQuery-type drag-and-drop operation or other event.</li>
+</ol>
+<h2>Loading this Helper</h2>
+
+<p>This helper is loaded using the following code:</p>
+<code>$this->load->helper('ajax');</code>
+
+<p>The following functions are available:</p>
+
+<h2>init_ajax()</h2>
+
+<p>You only want to call this function if you want to see a basic AJAX example Javascript, or if you want to write your own AJAX controllers around this function.<br />
+  Provides code for the Javascript function <em>GetXmlHttpObject()</em>, with compatability for Firefox, Opera 8.0+, Safari and IE.  </p>
+<p>Example:</p>
+
+<code>
+$code = init_ajax(); // returns js for GetXmlHttpObject()
+<br />
+</code>
+<h2>unique_ajid( prefix='' )<br />
+  get_ajid(  prefix='' )
+  <br />
+  unique_jsid(  prefix='' )<br />
+  get_jsid(  prefix='' )<br />
+  unique_ajax(  prefix='' )<br />
+  get_ajax(  prefix='' )</h2>
+<p>This function group is totally optional, and is useful when generating links or other visual interface objects that might activate the AJAX. When you call <em>unique_*</em>() it generates either explicitly AJID, JSID or both. When you call <em>get_*</em>() it returns the last generated ID. These IDs are used for DOM elements and AJAX function names. Each AJAX object (flipper, updater, ajax_div, ajax_element, table, toggler) is assigned a unique AJID and JSID. The global counters for these IDs make each AJAX unique on the page. To route a link to a specified AJAX function, you will need to store the ID of the AJAX function and use it to call with <em>javascript:func_name()</em>. If you want to assign a name to the element, which is sometimes useful when debugging, you can optionally provide a 'prefix' that must remain consistent for referring to both the AJID and JSID of a particular object. The 'prefix' should contain only letters just to be on the safe side, and they shouldn't match the IDs themselves. </p>
+<ul>
+  <li><span class="critical">You will probably only need to use the function <em>get_ajax</em>(), but they are all documented here just to be transparent.</span></li>
+</ul>
+<p>Example:</p>
+<code> // Generate a unique AJAX object ID. This is called automatically by the AJAX objects toggler(), flipper(), etc<br />
+$ajax_id = unique_ajax();<br />
+<br />
+// Generate a unique AJAX object ID with the prefix &quot;hotel&quot;
+:<br />
+$hotel_ajax_id = unique_ajax( &quot;hotel&quot; );<br />
+<br />
+// The most common use of the get_ functions, to create links that trigger the region to repopulate:<br />
+<br />
+$page-&gt;append_head( ajax_element_init( here().&quot;/page/param/etc&quot;, &quot;&quot;&lt;img src=&quot;loading_animated.gif&quot;&gt;&quot;, &quot;div&quot; );<br />
+$page-&gt;append_body( ajax_element( ) ); <br />
+$page-&gt;append_body( 
+  '&lt;a href=&quot;javascript:' . get_ajax() . '()&quot;&gt;&lt;img src=&quot;refresh.gif&quot; alt=&quot;Click to Refresh&quot;&gt;&lt;/a&gt;' );</code>
+<h2>ajax_div(page, id, someurl, loading, type='div' )</h2>
+<p>The parameter <em>id</em> must be unique. Generates Javascript code and places it inside the head of a <a href="../libraries/page.html">Page</a> object. Returns code to be placed in the body section. Example:</p>
+<code> ajax_div($page,&quot;javascript_function_key&quot;,here().&quot;/object/params&quot;,&quot;Please wait . . .&quot;, 'div');</code>
+<h2>ajax_element_init(  url, loading='Loading..', type='div', ajid='', jsid='', params='' )</h2>
+<p>Provides the javascript code for a &lt;HEAD&gt; section that is unique and provisory for a single AJAX element (usually &lt;div&gt; or &lt;span), one for each region of functionality. You can call this function in a couple of ways. The easiest way is the first example, followed by subsequently more open versions. </p>
+<p>Examples:</p>
+<p>This example creates a single AJAX region, that is triggered by links and the &lt;div&gt; area is repopulated with content from a URL. </p>
+<p><code>//Simplest way: creates a div, initializes the AJAX, uses a URL to gather data when a link is clicked:<br />
+  <br />
+  $page-&gt;append_head ( ajax_element_init( here().&quot;/page/param/etc&quot; ) ); // Places AJAX initialization code into the head.<br />
+  <br />
+  // Now that the element is initialized, you must then call
+  this in the appropriate place on the page, but<br />
+  // 
+also right after you have initialized the element, or else it will be hooked into the wrong object, so it<br />
+//
+is best to keep these two functions paired (or you can call the function ajax( $page, $url ) to do both.<br />
+<br />
+//
+This way is provided in case you are not using the Page object, but we are using the Page object.<br />
+// The Page object could be replaced with echo inside the &lt;body&gt; section.
+<br />
+  $page-&gt;append_body( ajax_element( ) );<br />
+  $page-&gt;append_body( ajax_element_link( '&lt;img src=&quot;myicon.jpg&quot; border=0&gt;' ) );<br />
+  <br />
+  //or you could do it yourself: $page-&gt;append_body();
+  <br />
+</code></p>
+<p>The following example creates multiple AJAX regions, that are triggered by links and the &lt;div&gt; area repopulated with a URL. The initial link appears inside the area that is going to be repopulated, and is replaced by a new link that calls the reference function, by passing URL variables to the URL that repopulates the &lt;div&gt; area. In this example, we show you how to handle its unique ID in the context of a custom HTML code block, with a custom loading screen.</p>
+<p><code>// Multiple AJAX regions repopulated by links which have parameters that are updated (such as for pagination)<br />
+  <br />
+for( $i=0; $i&lt;10; $i++ ) {<br />
+ $page-&gt;append_head( ajax_element_init( here().&quot;/page/param/etc&quot;, &quot;&quot;&lt;img src=&quot;loading_animated.gif&quot;&gt;&quot;, &quot;div&quot; );<br />
+ $page-&gt;append_body( ajax_element( ) );
+ <br />
+   $page-&gt;append_body( 
+    '&lt;a href=&quot;javascript:' . get_ajax() . '()&quot;&gt;&lt;img src=&quot;refresh.gif&quot; alt=&quot;Click to Refresh&quot;&gt;&lt;/a&gt;' );<br />
+}
+</code></p>
+<h2>ajax_element( id='', type='div' )</h2>
+<p>Provides HTML hooks for the element. You can do this manually (sometimes recommended) or you can use this function. See the above examples for more information. Optionally, you can supply the AJAX <em>id</em> acquired using <em>unique_ajid</em>() or <em>get_ajid</em>()</p>
+<p><code>$page-&gt;append_body( ajax_element( ) );<br />
+    <br />
+  // If you need to specify only the &lt;HTML&gt; element tag for the active AJAX object ids (the JSID and AJID):<br />
+  $page-&gt;append_body( ajax_element( '', 'span' ) );<br />
+</code></p>
+<h2>flipper( page, link, result, title=&quot;&quot;, action=&quot;press enter&quot;, cancel=&quot;cancel&quot;, form=&quot;the_form&quot;, modal=false )</h2>
+<p>Increments global JSID and AJID by one. Deploys an AJAX &quot;Flipper&quot; region that can be programmed in a few different ways. This is a two-stage Javascript-controlled section of the page and can be placed inside other structural elements. It is a form, so it uses HTTP post to post the entire page.</p>
+<ul>
+  <li> <strong>page</strong>: $this-&gt;page object </li>
+  <li>    <strong>link</strong>: html that appears in the link which leads to result</li>
+  <li>    <strong>result</strong>: resulting form or component including cancel link; use ' not &quot; <code class="critical">Note! You must use PHP's <strong>&quot;double quotes&quot; </strong>for result parameter! There is a function called <em>adq</em>() that fixes issues with storing \&quot; in this in the String Helper.</code></li>
+  <li>    <strong>title</strong>: the title of the link (mouseover text)</li>
+  <li>    <strong>action</strong>: submit link name   (default &quot;<em>press enter</em>&quot;) &quot;&quot; = suppress feature</li>
+  <li>    <strong>cancel</strong>: name that should appear on the link that reverts the region</li>
+  <li>    <strong>form</strong>: name/id of the form  (default &quot;<em>the_form</em>&quot;)</li>
+  <li>    <strong>modal</strong>: provides hidden mode element set to flipper id when true, so the form response can include a link that calls the process again without refreshing the entire page.</li>
+</ul>
+<p>Example:</p>
+<code>// You can do a couple of different things with the flipper:<br />
+<br />
+// Put some lorem ipsum text in a box that says 'close'<br />
+flipper( $this-&gt;page, &quot;&quot;, lorem_ipsum(5).'&lt;br&gt;', &quot;the form&quot; );<br />
+<br />
+// deploy form flipper without cancel button
+<br />
+flipper( $this-&gt;page, &quot;Submit Link Text&quot;, &quot;&lt;input type='text' size='50' value=''&gt;&quot;, &quot;Click to confirm&quot;, &quot;&quot;, &quot;&quot; );  // &lt;- Note! You must use &quot;&quot; for result parameter! <br />
+<br />
+// deploy flipper with a form, cancel button and posted on &lt;press enter&gt;<br />
+flipper( $this-&gt;page, '&amp;uarr; Upload A Track For ' . $album['name'],<br />
+&quot;&lt;form enctype='multipart/form-data' action='&quot; . here() . &quot;/band/manage' method='post' name='upload&quot; . $n . &quot;'&gt;<br />
+Title&lt;input type='text' name='title' size=50&gt;&lt;br&gt;&quot;<br />
+. &quot;Price &lt;input name='Price' type='text' value='0.99'&gt;&lt;br&gt;&quot;<br />
+. hiddens(&quot;album&quot;,$album['id'])<br />
+. &quot;Description&lt;br&gt;&lt;textarea name='description' rows=4 cols=50&gt;&lt;/textarea&gt;&lt;br&gt;MP3 file: &lt;input type='file' value='' name='mp3'&gt;&lt;/form&gt;&quot;,<br />
+&quot;Click to add a new track!&quot;, &quot;Add Track&quot;, &quot;cancel&quot;, &quot;upload&quot; );</code>
+<h2>toggler()</h2>
+<p>  Create an AJAX controlled div region that contains a scripted AJAX call to toggle the status of a flag on a MySQL table and update the region to show resulting value (true or false)<br />
+</p>
+<ul>
+  <li> <strong>page</strong>: $this-&gt;page object </li>
+  <li>    <strong>table</strong>: the table we are modifying</li>
+  <li>    <strong>field</strong>: the field we are modifying</li>
+  <li>    <strong>flag</strong>: the flag we are toggling</li>
+  <li>    <strong>on</strong>: what is shown if this item is &quot;on&quot;</li>
+  <li>    <strong>off</strong>: what is show if this item is &quot;off&quot;</li>
+  <li>    <strong>title</strong>: link title</li>
+  <li>    <strong>modal</strong>: provides hidden mode element set to flipper id when true, so the form response can include a link that calls the process again without refreshing the entire page.</li>
+</ul>
+<p>  Example:</p>
+<code>define( SOME_BITVECTOR, 1 );<br />
+define( SOME_BIT_VECTOR, 2 );<br />
+define( SOME_OTHER_BIT, 4 );
+<br />
+<br />
+toggler( $this-&gt;page, &quot;users_table&quot;, &quot;flags_field&quot;, SOME_BITVECTOR, &quot;The switch is on.&quot;, &quot;The switch is off.&quot;, &quot;Flip Switch&quot; );</code>
+<h2>updater( page,  php, delay, type='div')</h2>
+<p>Establishes updatable visual area updated by a stacked, delayed javascript that calls $php</p>
+<ul>
+  <li> <strong>page</strong>: $this-&gt;page object  </li>
+  <li><strong>php</strong>: the php to spit through ajax, automatically negotiated through a &lt;?php ?&gt; block, use \&quot; instead of &quot;</li>
+  <li><strong>delay</strong>: the delay (millis)</li>
+  <li><strong>type</strong>: the type of the element to be here created/updated</li>
+</ul>
+<p>Example:</p>
+<code> updater( $this-&gt;page, &quot;echo 'test'&quot;, 500, 'span');</code></div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+Previous Topic:&nbsp;&nbsp; <a href="../libraries/zip.html">Zip Encoding Class</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+Next Topic:&nbsp;&nbsp;<a href="compatibility_helper.html">Compatibility Helper</a></p>
+<p><a href="http://gudagi.net/herbigniter/">HerbIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://gudagi.com/">Gudagi</a></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array Helper : HerbIgniter User Guide</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<script type="text/javascript" src="../nav/nav.js"></script>
+<script type="text/javascript" src="../nav/prototype.lite.js"></script>
+<script type="text/javascript" src="../nav/moo.fx.js"></script>
+<script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Herb' />
+<meta name='description' content='HerbIgniter User Guide' />
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>HerbIgniter User Guide Version 1.7.2</h1></td>
+<td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://gudagi.net/herbigniter/">HerbIgniter Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+Menu Helper
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="gudagi.net/herbigniter/HI_user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Menu Helper</h1>
+
+<p>The Menu Helper file contains functions that assist in deploying pre-loaded rollover menus. It establishes and manipulates the global variable $menus, which you can use to hard-wire the preloading and display where you'd like it.</p>
+
+
+<h2>Loading this Helper</h2>
+
+<p>This helper is loaded using the following code:</p>
+<code>$this->load->helper('menu');</code>
+
+<p>The following functions are available:</p>
+
+<h2>init_stylish_buttons()</h2>
+
+<p>Returns &lt;HEAD&gt; code that deploys the Adobe / Macromedia preloading rollovers code.</p>
+<p>Example:</p>
+
+<code> $page-&gt;append_head( init_stylish_buttons() );
+</code>
+
+
+<h2>onload_preload_images()</h2>
+
+<p>Returns code to be added to your onload tag attribute. Receives an array of urls to images that are to be preloaded.</p>
+
+<code>$page-&gt;add_onload( onload_preload_images( array( &quot;someimage.jpg&quot;, &quot;someotherimage.png&quot; ) );</code>
+<h2>make_menu_horiz( name, path_to_images, items_array, filler_image, trailing_w )</h2>
+<p>Generates the content that displays a simple menu in a horizontal fashion. The parameter trailing_w is width of the filler image at the end of the menu. This function returns the name of the menu and updates the global $menus array.</p>
+<code> $items=array();<br />
+$items[] = array( 0=&gt;here().'/home', 					1=&gt;'View your home wall.', 		2=&gt;'wall' );<br />
+$items[] = array( 0=&gt;here().'/photos', 				1=&gt;'View and manage your photos.',	2=&gt;'photos' );<br />
+$items[] = array( 0=&gt;here().'/friends/of/'.$this-&gt;username,		1=&gt;'See who are your friends.',		2=&gt;'friends' );<br />
+$items[] = array( 0=&gt;here().'/blog/by/'.$this-&gt;username, 		1=&gt;'Read or write your blog!',		2=&gt;'blog' );<br />
+$items[] = array( 0=&gt;here().'/account/edit/'.$this-&gt;username,		1=&gt;'Edit your profile settings.',	2=&gt;'edit' );<br />
+$fillwidth=146;<br />
+<br />
+make_menu_horiz( &quot;profile&quot;, base_url().'MENU', $items, base_url().'MENU/filler.png', $fillwidth );<br />
+<br />
+$menus = get_menus();<br />
+$page-&gt;append_head( $menus['head'] );<br />
+$page-&gt;add_onload( $menus['onload'] );<br />
+$page-&gt;append_body( $menus['profile'] );</code>
+<h2>make_menu_vert( name, path_to_images, items_array )</h2>
+<p>Generates the content that displays a simple menu in a horizontal fashion. The parameter trailing_w is width of the filler image at the end of the menu. This function returns the name of the menu and updates the global $menus array.</p>
+<code> $items=array();<br />
+$items[] = array( 0=&gt;here().'/home', 					1=&gt;'View your home wall.', 		2=&gt;'wall' );<br />
+$items[] = array( 0=&gt;here().'/photos', 				1=&gt;'View and manage your photos.',	2=&gt;'photos' );<br />
+$items[] = array( 0=&gt;here().'/friends/of/'.$this-&gt;username,		1=&gt;'See who are your friends.',		2=&gt;'friends' );<br />
+$items[] = array( 0=&gt;here().'/blog/by/'.$this-&gt;username, 		1=&gt;'Read or write your blog!',		2=&gt;'blog' );<br />
+$items[] = array( 0=&gt;here().'/account/edit/'.$this-&gt;username,		1=&gt;'Edit your profile settings.',	2=&gt;'edit' );<br />
+$fillwidth=0;<br />
+<br />
+make_menu_vert( &quot;profile&quot;, base_url().'MENU', $items, base_url().'MENU/filler.png' );<br />
+<br />
+ $menus = get_menus();<br />
+$page-&gt;append_head( $menus['head'] );<br />
+$page-&gt;add_onload( $menus['onload'] );<br />
+$page-&gt;append_body( $menus['profile'] );</code></div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+Previous Topic:&nbsp;&nbsp; <a href="../libraries/zip.html">Zip Encoding Class</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+Next Topic:&nbsp;&nbsp;<a href="compatibility_helper.html">Compatibility Helper</a></p>
+<p><a href="http://gudagi.net/herbigniter/">HerbIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://gudagi.com/">Gudagi</a></p>
+</div>
+
+</body>
+</html>

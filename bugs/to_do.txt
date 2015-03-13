@@ -1,0 +1,82 @@
+CodeTrack ToDos:
+
+
+Scrub cookie data
+
+QA report is wrong...
+
+Parameterize 30 in QA stats
+
+Make sure to add "This should never happen" to all internal messages
+
+Clean up PHP/HTML escapes in addEditBugForm
+
+value="x" ???
+
+key create, use multi-alpha generator
+
+example.com everywhere
+
+Check if "All Projects" & "this is a kludge" for internationalization
+
+Open up all column labels on home page in config.inc.php, check for internationalization
+
+Add suggestion to Internationalization die to check .inc file for phrase
+
+Uncomment project mod
+
+Update users
+
+Update projects
+
+Enforce proj permissions
+
+Clean up indents in functions.inc.php
+
+Check error log for PHP
+
+Sweep all die_now msgs
+
+What's up with "lifespan" hardcode strstr in defect stats? a) fucked up, and b) no localized
+
+SVN integration
+
+Update locale file for real php date URL
+
+Sweep zztops and Why does this work?
+
+nice-to-have: dying inside export should not display inside dump file (only -- i.e., no screen indicator)
+
+read_only_table is actually a pivot_table:  labels on left, single entry array. Rename it.
+
+clean up leading tabs on codetrack.php
+
+sweep inline styles as much as possible
+
+validate admin & tools for included tips
+
+phpdocs for all functions?
+
+localize & rewrite help -- it sucks
+
+tab order on new & edit bug
+
+add docx, wri, and open office extensions on allowed upload file types
+
+force ssl DEFINE
+
+pull email (or look at portable drive) for mail mod
+
+consider basic authentication
+
+Are we using a random salt + hash?
+
+css: txtSmall is a stupid name...  Maybe txtResult ?
+
+diff css & w3css w/ original (button background magic screwiness)
+
+
+ CHANGELOG
+
+Internationalization
+Major security update (per-installation server key)

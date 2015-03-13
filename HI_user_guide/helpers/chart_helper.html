@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array Helper : HerbIgniter User Guide</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<script type="text/javascript" src="../nav/nav.js"></script>
+<script type="text/javascript" src="../nav/prototype.lite.js"></script>
+<script type="text/javascript" src="../nav/moo.fx.js"></script>
+<script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Herb' />
+<meta name='description' content='HerbIgniter User Guide' />
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>HerbIgniter User Guide Version 1.7.2</h1></td>
+<td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://gudagi.net/herbigniter/">HerbIgniter Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+Chart Helper
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="gudagi.net/herbigniter/HI_user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Chart Helper</h1>
+
+<p>The Chart Helper file contains functions that assist in working with the bundled Flash charts. The author of HerbIgniter purchased a Developer's License, and has included it in this library under this library's license. If you want the source code and a license of your own, visit <a href="http://www.amcharts.com">amCharts</a>.</p>
+
+
+<h2>Loading this Helper</h2>
+
+<p>This helper is loaded using the following code:</p>
+<code>$this->load->helper('chart');</code>
+
+<p>The following functions are available:</p>
+
+<h2>pie( $settings, $labels, $slices, filename=&quot;output.xml&quot;, w=534, h=170, align=&quot;middle&quot;, bg=&quot;transparent&quot;, path=NULL, chart_title=NULL )</h2>
+
+<p>Deploys the amCharts Pie Chart. There are a lot of settings. <strong>Default settings are filled in if you don't set all of them.</strong><br />
+  <br />
+</p>
+<p><span class="critical">You can read about the settings by looking at the Chart Helper file in the HerbIgniter source code.</span> <br />
+</p>
+<p><br />
+  You can also visit amCharts, but our interface doesn't follow those completely (due to the fact that we are in an array and they are in XML). You must define a writeable (chmod 777) xml dump file, which programs the actual Flash chart on the page. The <em>path</em> parameter sets the required path for the swf file. If it is not set, it defaults to the httproot/charts. You must also populate data via the <em>slices</em> parameter with a specific object (shown below, after a long list of settings). You can also program the <em>labels </em>parameter.</p>
+<p> This function has a lot of settings:</p>
+<ul>
+  <li><strong>&lt;settings&gt;</strong> (these settings are common to all charts)<br />
+    <br />
+    $settings['font']                font name<br />
+$settings['size']                font size<br />
+$settings['color']               font color<br />
+$settings['decimal']             decimal seperator<br />
+$settings['thousands']           thousands seperator<br />
+$settings['digits']              digits to be shown after decimal to right<br />
+$settings['max']                 maximum value for chart data item<br />
+$settings['min']                 minimum value for chart data item<br />
+$settings['polldelays']          number of seconds between data polls to xml source<br />
+$settings['preload']             true/false - display preloaded data<br />
+$settings['redraw']              true/false - redraw when zoomed / resized<br />
+$settings['timestamp']           true/false - store a timestamp<br />
+$settings['precision']           how many numbers shown after comma for calculated values (percents)<br />
+$settings['exclude']             true/false - to exclude invisible slices when alpha=0 when calculating percents<br />
+$settings['js']                  true/false - polls javascript for signals<br />
+</li>
+  <li><strong>&lt;pie&gt;</strong><br />
+    <br />
+    $settings['x']                   size of pie<br />
+    $settings['y']                   size of pie<br />
+    $settings['radius']              radius of pie chart<br />
+    $settings['inner_radius']        inner radius for hole in donut chart (or set to 0)<br />
+$settings['height']              pie height used by 3d effect<br />
+$settings['angle']               pie leaning angle used by 3d effect<br />
+$settings['start_angle']         angle of the first slice, works properly only when height=0; when height&gt;0, valid entries are 90, 270<br />
+$settings['outline']             outline color<br />
+$settings['outline_alpha']       outline opacity (percentage)<br />
+$settings['base_color']          color of first slice<br />
+$setting['brightness']           (-100% to 100%) brightness where 0=no change, negative means darker, positive means lighter <br />
+$settings['colors']              a list of colors for each slice, example: #00000F,#0D8ECF,... <br />
+$settings['target']              _blank, _top, _parent, etc<br />
+$settings['alpha']               opacity of chart<br />
+$settings['hover']               mouse hover brightness, -255 to 255<br />
+$settings['gradient']            'linear' or 'radial'<br />
+$settings['ratio']               number list (-255 to 255 each) separated by commas for gradiant<br />
+$settings['fly']                 number in seconds of flying animation<br />
+$settings['flyeffect']           'bounce', 'regular', 'strong'<br />
+$settings['flyradius']           percentage radius used during animation<br />
+$settings['flyalpha']            alpha<br />
+$settings['sequenced']           true/false - whether the slices appear together or in sequence<br />
+$settings['pull']                true/false - are slices 'pulled' from the chart?<br />
+$settings['pulltime']            number in seconds of pulling animation<br />
+$settings['pullfx']              'bounce', 'regular', 'strong'<br />
+$settings['pullradius']          number (percentage) how far the slices should be pulled out<br />
+$settings['pull1']               true/false - slices are pulled exclusively, rather than toggled in/out on click<br />
+$settings['labelradius']         percentage/pixels - distance of the labels from the pie<br />
+$settings['textcolor']           hex color code of label text (defaults to master text color)<br />
+$settings['textsize']            size of label text (defaults to master text size, above)<br />
+$settings['width']               label width<br />
+$settings['lines']               true/false - show lines from slices to data labels?<br />
+$settings['line_color']          color of the lines<br />
+$settings['line_alpha']          opacity of the lines<br />
+$settings['hide']                data labels of slices less than this percentage will be hidden<br />
+$settings['avoid']               true/false - when true, labels are arranged so they do not overlap<br />
+$settings['group']               a percentage threshold where values &lt; this are 'grouped' into a single slice<br />
+$settings['groupcolor']          color of the 'group' slice<br />
+$settings['grouptitle']          title of the 'group' slice<br />
+$settings['groupurl']            url of the 'group' slice<br />
+$settings ['groupdesc']          text description of the group<br />
+$settings['grouppull']           true/false - can this slice be removed from the pie?<br />
+$settings['bgcolor']             background color<br />
+$settings['bgalpha']             background opacity<br />
+$settings['border_color']        border color<br />
+$settings['border_alpha']        border opacity<br />
+$settings['bgimage']             background image: swf, jpg (non progressive-scan), gif<br />
+$settings['balloon']             true/false - enables the rollover-balloon label<br />
+$settings['balloon_color']       balloon background color<br />
+$settings['balloon_alpha']       balloon opacity<br />
+$settings['balloon_text']        balloon text color<br />
+$settings['balloon_size']        balloon size<br />
+$settings['balloon_width']       balloon width<br />
+$settings['balloon_corner']      balloon corner radius<br />
+$settings['balloon_border_width']        balloon border width<br />
+$settings['balloon_border_alpha']        balloon border alpha<br />
+$settings['balloon_border_color']        balloon border color<br />
+$settings['balloon_format']      {value} {title} {percents} {description}) You can format any data label: {value} - will be replaced with value and so on. You can add your own text or html code too.<br />
+  </li>
+  <li><strong>    &lt;legend&gt;</strong><br />
+    <br />
+    $settings['legend']              true/false - activate chart legend<br />
+$settings['legend_x']            top left x of legend<br />
+$settings['legend_y']            top left y of legend<br />
+$settings['legend_width']        width of legend<br />
+$settings['legend_color']        color of legend<br />
+$settings['max_columns']         maximum number of columns in the legend<br />
+$settings['legend_alpha']        opacity of the legend<br />
+$settings['legend_border_color'] border color of the legend<br />
+$settings['legend_border_alpha'] border opacity of the legend<br />
+$settings['legend_text']         text color of the legend <br />
+$settings['legend_size']         text size of the legend<br />
+$settings['legend_spacing']      legend spacing (vertical and horizontal gap between entries)<br />
+$settings['legend_margins']      legend margin<br />
+$settings['legend_reverse']      true/false - when true, sort in reverse order<br />
+$settings['legend_align']        'left', 'center', 'right'</li>
+  <li><strong>&lt;keys&gt;</strong><br />
+    <br />
+    $settings['key_size']            size of the key<br />
+    $settings['key_border_color']    border color (leave as '' for no border)<br />
+    $settings['key_values']          true/false - show values near legend entries?<br />
+$settings['key_width']<br />
+$settings['key_format']            content, using {value} and {percents} to designate locations<br />
+  </li>
+  <li><strong>&lt;export settings&gt;</strong><br />
+    <br />
+    $settings['export']              true/false - allow exporting of chart image<br />
+$settings['export_target']       where to place it / file name    <br />
+$settings['export_x']            x upper left of exporting message<br />
+$settings['export_y']            y upper left of exporting message<br />
+$settings['export_bgcolor']      background color of exporting message<br />
+$settings['export_alpha']        opacity of exporting message<br />
+$settings['export_color']        exporting message font color<br />
+$settings['export_size']         exporting message font size<br />
+$settings['errors']              true/false - show error messages?<br />
+$settings['error_x']             x location upper left of error message<br />
+  $settings['error_y']             y location upper left of error message<br />
+  $settings['error_color']         background color of error message<br />
+  $settings['error_alpha']         opacity of error messages<br />
+  $settings['error_text']          font used by error messages<br />
+  $settings['error_size']          size of font used by error messages<br />
+  $settings['strings_error']       what to report when there is no data available<br />
+  $settings['strings_export']      what to report when there is an exporting error<br />
+  $settings['strings_collecting']  what to report when there is an error collecting polled data<br />
+  $settings['menu_definitions']    a set of xml declarations that look like: &lt;menu function_name=&quot;printChart&quot; title=&quot;Print chart&quot;&gt;&lt;/menu&gt; <br />
+  $settings['menu_zoom']           true/false - show flash player zoom menu<br />
+  $settings['menu_print']          true/false - show print option<br />
+  </li>
+  <li><strong>&lt;labels&gt;</strong><br />
+    <br />
+    $label['lid']                    label id<br />
+    $label['x']                      label's x location (upper left)<br />
+    $label['y']                      label's y location (upper left)<br />
+    $label['rotate']                 label's rotation 0-360<br />
+    $label['width']                  label's maximum width<br />
+    $label['align']                  label's alignment<br />
+    $label['color']                  label's font color<br />
+    $label['size']                   label's font size<br />
+    $label['text']                   label text: supports &lt;b&gt;, &lt;i&gt;, &lt;u&gt;, &lt;font&gt;, &lt;a href=&quot;&quot;&gt;, &lt;br/&gt;<br />
+  </li>
+  <li>    $settings['messages'];           additional messages sent via xml of the form: &lt;message&gt;content&lt;/message&gt;</li>
+  <li>    <strong>&lt;slices&gt;</strong><br />
+    <br />
+    $slice['title']<br />
+    $slice['pullout']<br />
+    $slice['value']<br />
+    $slice['url']</li>
+</ul>
+<p>  Example:</p>
+
+<code> $slices = array( <br />
+array( 'title'=&gt;'Percentage of Herb Growers', 'pullout'=&gt;true, 'value'=&gt;17, 'url=&gt;'http://www.potgrowersusa.com' ),
+<br />
+array( 'title'=&gt;'Percentage of Herb Consumers, 'pullout'=&gt;true, 'value'=&gt;35, 'url=&gt;'http://www.hightimes.com' ), <br />
+array( 'title'=&gt;'Percentage of Herb Drinkers', 'pullout'=&gt;true, 'value'=&gt;70, 'url=&gt;'http://www.moderndrunkard.com' ) <br />
+);<br />
+<br />
+$settings = array( 'base_color'=&gt;'FF0000' );
+<br />
+$page-&gt;append_body( pie( $settings, $slices, &quot;somewriteable.xml&quot; ) );</code>
+
+
+<h2>function column_chart( settings, labels, guides, graphs, data, series='1',<br />
+filename=&quot;output.xml&quot;, w=534, h=170, align=&quot;middle&quot;, bg=&quot;transparent&quot;,<br />
+path=NULL, chart_title=NULL )</h2>
+
+<p>You can also invoke this function using the synonymous <em>bar()</em> function. There are a lot of settings. In fact, this is the most complex of the amCharts (except for perhaps the Stock Chart called amStock). <strong>Default settings are filled in if you don't set all of them.</strong> </p>
+<p class="critical">You can read about all of the settings by looking at the Chart Helper file in the HerbIgniter source code.</p>
+<p>You can also visit amCharts, but our interface doesn't follow those completely (due to the fact that we are in an array and they are in XML). You must define a writeable (chmod 777) xml dump file, which programs the actual Flash chart on the page. The <em>path</em> parameter sets the required path for the swf file. If it is not set, it defaults to the httproot/charts. You must also populate data via the <em>slices</em> parameter with a specific object (shown below, after a long list of settings). You can also program the <em>labels </em>parameter. </p>
+<p>Usage example:</p>
+<code>$slices = array( <br />
+array( 'title'=&gt;'Percentage of Herb Growers', 'pullout'=&gt;true, 'value'=&gt;17, 'url=&gt;'http://www.potgrowersusa.com' ), <br />
+array( 'title'=&gt;'Percentage of Herb Consumers, 'pullout'=&gt;true, 'value'=&gt;35, 'url=&gt;'http://www.hightimes.com' ), <br />
+array( 'title'=&gt;'Percentage of Herb Drinkers', 'pullout'=&gt;true, 'value'=&gt;70, 'url=&gt;'http://www.moderndrunkard.com' ) <br />
+);<br />
+<br />
+$settings = array( 'base_color'=&gt;'FF0000' ); <br />
+$page-&gt;append_body( bar( $settings, $slices, &quot;somewriteable.xml&quot; ) );</code></div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+Previous Topic:&nbsp;&nbsp; <a href="../libraries/zip.html">Zip Encoding Class</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+Next Topic:&nbsp;&nbsp;<a href="compatibility_helper.html">Compatibility Helper</a></p>
+<p><a href="http://gudagi.net/herbigniter/">HerbIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://gudagi.com/">Gudagi</a></p>
+</div>
+
+</body>
+</html>

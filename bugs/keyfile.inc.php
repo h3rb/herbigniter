@@ -1,0 +1,1 @@
+<?php DEFINE( "CT_PRIVATE_KEY", "zehdwmldwvwpdqicelsvnnorsjpotnpjognlstydwspbonqrrnhbqeuyhoxxlguh" ); ?>

@@ -1,0 +1,1018 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Table of Contents : HerbIgniter User Guide</title>
+
+
+<link rel='stylesheet' type='text/css' media='all' href='userguide.css' />
+
+<script type="text/javascript" src="nav/nav.js"></script>
+<script type="text/javascript" src="nav/prototype.lite.js"></script>
+<script type="text/javascript" src="nav/moo.fx.js"></script>
+<script type="text/javascript" src="nav/user_guide_menu.js"></script>
+
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Herb' />
+<meta name='description' content='HerbIgniter User Guide' />
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.pack.js"></script>
+	<style type="text/css">
+		.random-color	{ display:inline; border:0px; padding:0px; }
+	</style>
+
+	<!--script type="text/javascript" src="jquery-1.2.6.js"></script-->
+	<script type="text/javascript">
+		$(document).ready(function() {
+			
+/*
+ * jQuery Color Animations
+ * Copyright 2007 John Resig
+ * Released under the MIT and GPL licenses.
+ */
+
+(function(jQuery){
+
+	// We override the animation for all of these color styles
+	jQuery.each(['backgroundColor', 'borderBottomColor', 'borderLeftColor', 'borderRightColor', 'borderTopColor', 'color', 'outlineColor'], function(i,attr){
+		jQuery.fx.step[attr] = function(fx){
+			if ( fx.state == 0 ) {
+				fx.start = getColor( fx.elem, attr );
+				fx.end = getRGB( fx.end );
+			}
+
+			fx.elem.style[attr] = "rgb(" + [
+				Math.max(Math.min( parseInt((fx.pos * (fx.end[0] - fx.start[0])) + fx.start[0]), 255), 0),
+				Math.max(Math.min( parseInt((fx.pos * (fx.end[1] - fx.start[1])) + fx.start[1]), 255), 0),
+				Math.max(Math.min( parseInt((fx.pos * (fx.end[2] - fx.start[2])) + fx.start[2]), 255), 0)
+			].join(",") + ")";
+		}
+	});
+
+	// Color Conversion functions from highlightFade
+	// By Blair Mitchelmore
+	// http://jquery.offput.ca/highlightFade/
+
+	// Parse strings looking for color tuples [255,255,255]
+	function getRGB(color) {
+		var result;
+
+		// Check if we're already dealing with an array of colors
+		if ( color && color.constructor == Array && color.length == 3 )
+			return color;
+
+		// Look for rgb(num,num,num)
+		if (result = /rgb\(\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*,\s*([0-9]{1,3})\s*\)/.exec(color))
+			return [parseInt(result[1]), parseInt(result[2]), parseInt(result[3])];
+
+		// Look for rgb(num%,num%,num%)
+		if (result = /rgb\(\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*,\s*([0-9]+(?:\.[0-9]+)?)\%\s*\)/.exec(color))
+			return [parseFloat(result[1])*2.55, parseFloat(result[2])*2.55, parseFloat(result[3])*2.55];
+
+		// Look for #a0b1c2
+		if (result = /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/.exec(color))
+			return [parseInt(result[1],16), parseInt(result[2],16), parseInt(result[3],16)];
+
+		// Look for #fff
+		if (result = /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/.exec(color))
+			return [parseInt(result[1]+result[1],16), parseInt(result[2]+result[2],16), parseInt(result[3]+result[3],16)];
+
+		// Otherwise, we're most likely dealing with a named color
+		return colors[jQuery.trim(color).toLowerCase()];
+	}
+	
+	function getColor(elem, attr) {
+		var color;
+
+		do {
+			color = jQuery.curCSS(elem, attr);
+
+			// Keep going until we find an element that has color, or we hit the body
+			if ( color != '' && color != 'transparent' || jQuery.nodeName(elem, "body") )
+				break; 
+
+			attr = "backgroundColor";
+		} while ( elem = elem.parentNode );
+
+		return getRGB(color);
+	};
+	
+	// Some named colors to work with
+	// From Interface by Stefan Petre
+	// http://interface.eyecon.ro/
+
+	var colors = {
+		aqua:[0,255,255],
+		azure:[240,255,255],
+		beige:[245,245,220],
+		black:[0,0,0],
+		blue:[0,0,255],
+		brown:[165,42,42],
+		cyan:[0,255,255],
+		darkblue:[0,0,139],
+		darkcyan:[0,139,139],
+		darkgrey:[169,169,169],
+		darkgreen:[0,100,0],
+		darkkhaki:[189,183,107],
+		darkmagenta:[139,0,139],
+		darkolivegreen:[85,107,47],
+		darkorange:[255,140,0],
+		darkorchid:[153,50,204],
+		darkred:[139,0,0],
+		darksalmon:[233,150,122],
+		darkviolet:[148,0,211],
+		fuchsia:[255,0,255],
+		gold:[255,215,0],
+		green:[0,128,0],
+		indigo:[75,0,130],
+		khaki:[240,230,140],
+		lightblue:[173,216,230],
+		lightcyan:[224,255,255],
+		lightgreen:[144,238,144],
+		lightgrey:[211,211,211],
+		lightpink:[255,182,193],
+		lightyellow:[255,255,224],
+		lime:[0,255,0],
+		magenta:[255,0,255],
+		maroon:[128,0,0],
+		navy:[0,0,128],
+		olive:[128,128,0],
+		orange:[255,165,0],
+		pink:[255,192,203],
+		purple:[128,0,128],
+		violet:[128,0,128],
+		red:[255,0,0],
+		silver:[192,192,192],
+		white:[255,255,255],
+		yellow:[255,255,0]
+	};
+	
+})(jQuery);
+
+			
+			
+			original = $('a.random-color').css('color');
+			$('a.random-color').hover(function() { //mouseover
+				var col = 'rgb(' + (Math.floor(Math.random() * 255)) + ',' + (Math.floor(Math.random() * 255)) + ',' + (Math.floor(Math.random() * 255)) + ')';
+				$(this).animate({
+					'color': col,
+					'paddingLeft': '20px'
+				},1000);
+			},function() { //mouseout
+				$(this).animate({
+					'color': original,
+					'paddingLeft': '0'
+				},500);
+			});
+		});
+	</script>
+
+
+</head>
+<body>
+
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('null');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>HerbIgniter User Guide Version 1.7.2</h1></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+<!-- START BREADCRUMB -->
+
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://gudagi.net/herbigniter/">HerbIgniter Home</a> &nbsp;&#8250;&nbsp;
+<a href="index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+Table of Contents
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="gudagi.net/herbigniter/HI_user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Quick Reference Card</h1>
+
+<table cellpadding="0" cellspacing="10" border="0" width="100%">
+<tr>
+  <td valign="top"><h3>Class Reference</h3></td>
+  <td valign="top">&nbsp;</td>
+  <td valign="top"><h3>Helper Reference</h3></td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<tr>
+<td valign="top" width="25%"><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/benchmark.html" class="">Benchmarking Class</a>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode">// Mark a start point<br />
+          $this-&gt;<strong>benchmark</strong>-&gt;<strong>mark</strong>('dog');<br />
+          <br />
+          //
+          Mark an end point<br />
+          $this-  &gt;benchmark-&gt;mark('cat');<br />
+          <br />
+          /*
+          Run  &quot;elapsed_time()&quot; to view  results */<br />
+          echo<br />
+          $this-&gt;benchmark-&gt;<strong>elapsed_time</strong>('dog','cat');
+          <br />//{<strong>elapsed_time</strong>} or {<strong>memory_usage</strong>} </td>
+        </tr>
+    </table>
+    <br />
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/calendar.html" class="">Calendar Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode">$prefs['template'] = <br />
+          '<dfn>!Click Calendar Class Link Above For Template!</dfn>';<br />
+          
+          <br />$prefs = array (<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'start_day'&nbsp;&nbsp;&nbsp; =&gt; 'saturday',<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'month_type'&nbsp;&nbsp; =&gt; 'long',<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'day_type'&nbsp;&nbsp;&nbsp;&nbsp; =&gt; 'short'<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br />
+            <br />
+            $this-&gt;load-&gt;library('calendar', $prefs);<br />
+            echo $this-&gt;<strong>calendar</strong>-&gt;<strong>generate</strong>(<kbd>2006</kbd>, <kbd>6</kbd>);
+          <br />$data = array(&nbsp;3&nbsp; =&gt; 'http://x.com/article/2006/03/',<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;7&nbsp; =&gt; 'http://x.com/article/2006/07/',<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;13 =&gt; 'http://x.com/article/2006/13/',<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;26 =&gt; 'http://x.com/article/2006/26/'<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br />
+            <br />
+            echo $this-&gt;calendar-&gt;generate(<kbd>2006</kbd>, <kbd>6</kbd>, <var>$data</var>);</td>
+        </tr>
+    </table>
+    <br />
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/cart.html" class="">Cart Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><kbd>^</kbd>Read the docs on this one (click the link above).
+          <br />
+          $this-&gt;<strong>cart</strong>-&gt;<strong>insert</strong>();<br />
+            $this-&gt;cart-&gt;<strong>update</strong>();<br />
+            $this-&gt;cart-&gt;<strong>total</strong>();<br />
+            $this-&gt;cart-&gt;<strong>total_items</strong>();<br />
+            $this-&gt;cart-&gt;<strong>contents</strong>();<br />
+            $this-&gt;cart-&gt;<strong>has_options</strong>(rowid);<br />
+            $this-&gt;cart-&gt;<strong>options</strong>(rowid);<br />
+            $this-&gt;cart-&gt;<strong>destroy</strong>();</td>
+        </tr>
+    </table>
+    <br />
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/config.html" class="">Config Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode">// Loads a config file &quot;settings.php&quot;<br />
+          $this-&gt;<strong>config</strong>-&gt;<strong>load</strong>('<var>settings</var>', <kbd>TRUE</kbd>);<br />
+          <br />
+          // Retrieve config item  <em>option</em> in <em>settings</em><br />
+          $option = $this-&gt;config-&gt;<strong>item</strong>('<dfn>option</dfn>','<var>settings</var>');<br />
+          <br />
+          // An alternate way to specify the  item:<br />
+          $blogcfg = $this-&gt;config-&gt;<strong>item</strong>('<var>blog_settings</var>');<br />
+          $site_name = $blogcfg['site_name'];</td>
+        </tr>
+    </table>
+    <br />
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/database/index.html" class="">Database Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><kbd>^</kbd>Read the docs on this one (click the link above).
+          <br />
+          See &quot;Query&quot; Helper in Helper Reference <kbd>-&gt;</kbd></td>
+        </tr>
+    </table>
+    <br />
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/email.html" class="">Email Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode">$this-&gt;load-&gt;library(<strong>'email'</strong>);<br />
+          <br />
+          $this-&gt;email-&gt;<strong>from</strong>('your@x.com', 'Name');<br />
+          $this-&gt;email-&gt;<strong>to</strong>('someone@x.com'); <br />
+          $this-&gt;email-&gt;<strong>cc</strong>('another@another-x.com'); <br />
+          $this-&gt;email-&gt;<strong>bcc</strong>('them@their-x.com'); <br />
+          <br />
+          $this-&gt;email-&gt;<strong>subject</strong>('Email Test');
+          <br />            $this-&gt;email-&gt;<strong>message</strong>('Testing the email class.\nMuahahah.\n\t\tSincerely,\n\t\tHerb'); <br />
+            <br />
+            $this-&gt;email-&gt;<strong>send</strong>();<br />
+            <br />
+            echo $this-&gt;email-&gt;<strong>print_debugger</strong>();</td>
+        </tr>
+    </table>
+    <br />
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/encryption.html" class="">Encryption Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode">$this-&gt;load-&gt;library(<strong>'encrypt'</strong>); 
+          <br />
+          $config['encryption_key'] = &quot;YOUR KEY&quot;;
+          <br />$msg = 'My secret message';<br />
+            $key = 'super-secret-key';<br />
+            <br />
+            $encryptd = $this-&gt;<strong>encrypt</strong>-&gt;<strong>encode</strong>($msg,$key);<br />
+            $plaintext = $this-&gt;<strong>encrypt</strong>-&gt;<strong>decode</strong>($encryptd);</td>
+        </tr>
+    </table>
+    <br />
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/file_uploading.html" class="">File Uploading Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><kbd>^</kbd>Read the docs on this one (click the link above).</td>
+        </tr>
+    </table>
+    <br />
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/form_validation.html" class="">Form Validation Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><kbd>^</kbd>Read the docs on this one (click the link above).</td>
+        </tr>
+    </table>
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/ftp.html" class=""><br />
+      FTP Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode">$this-&gt;load-&gt;library(<strong>'ftp'</strong>);<br />
+          <br />
+          $config['hostname'] = 'ftp.example.com';<br />
+          $config['username'] = 'your-username';<br />
+          $config['password'] = 'your-password';<br />
+          $config['debug'] 	= TRUE;<br />
+          <br />
+          $this-&gt;ftp-&gt;<strong>connect</strong>($config);
+          <br />$this-&gt;ftp-&gt;<strong>upload</strong>('/local/path/file.html', '/remote/file.html', 'ascii', 0775);
+          <br />            $this-&gt;ftp-&gt;<strong>rename</strong>('/remote/src.html', '/remote/dest.html'); 
+          <br />$this-&gt;ftp-&gt;<strong>move</strong>('/remote/from.html', '/remote/to.html'); 
+          <br />$this-&gt;ftp-&gt;<strong>delete_file</strong>('/remote/blog.html'); 
+          <br />//!!!! $this-&gt;ftp-&gt;<strong>delete_dir</strong>('/deletes/recursive'); 
+          <br />$list = $this-&gt;ftp-&gt;<strong>list_files</strong>('/remote/');
+          <br />$this-&gt;ftp-&gt;<strong>mirror</strong>('/local/path/', '/remote/path/'); 
+          <br />$this-&gt;ftp-&gt;<strong>mkdir</strong>('/remote/', 777); 
+          <br />// Chmod &quot;bar&quot; to 777<br />
+            $this-&gt;ftp-&gt;<strong>chmod</strong>('/remote/',777); 
+          <br />$this-&gt;ftp-&gt;<strong>close</strong>();</td>
+        </tr>
+    </table>
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/table.html" class=""><br />
+    HTML Table Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><p>$this-&gt;load-&gt;library(<strong>'table'</strong>);<br />
+          $data = array(<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array('Name', 'Color', 'Size'),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array('Fred', 'Blue', 'Small'),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array('Mary', 'Red', 'Large'),<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array('John', 'Green', 'Medium') <br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br />
+          echo $this-&gt;<strong>table</strong>-&gt;<strong>generate</strong>($data); </p>
+          <p>$this-&gt;table-&gt;<strong>set_caption</strong>();<br />
+            $this-&gt;table-&gt;<strong>set_heading</strong>();<br />
+$this-&gt;table-&gt;<strong>add_row</strong>('Blue', 'Red', 'Green'); //or array()</p>
+          <p>$list = array('one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve');  <br />
+            $new_list = $this-&gt;table-&gt;<strong>make_columns</strong>($list, 3);<br />
+            $this-&gt;table-&gt;generate($new_list);<br />
+          </p>
+          <p>$tmpl =  array( 'table_open'&nbsp;&nbsp;=&gt; '&lt;table border=&quot;1&quot; cellpadding=&quot;2&quot; cellspacing=&quot;1&quot; class=&quot;mytable&quot;&gt;' );<br />
+$this-&gt;table-&gt;<strong>set_template</strong>($tmpl);<br />
+$this-&gt;table-&gt;<strong>set_empty</strong>(&quot;&amp;nbsp;&quot;);<br />
+<br />
+<kbd>$this-&gt;table-&gt;clear();</kbd> // required for multiple tables</p></td>
+        </tr>
+    </table>
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/image_lib.html" class=""><br />
+    Image Manipulation Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode">$config['image_library'] = 'gd2';<br />
+          $config['source_image']	= '/path/to/mypic.jpg';<br />
+          $config['create_thumb'] = TRUE;<br />
+          $config['maintain_ratio'] = TRUE;<br />
+          $config['width']		= 75;<br />
+          $config['height']	= 50;<br />
+          <br />
+          $this-&gt;load-&gt;library(<strong>'image_lib'</strong>, $config); <br />
+          
+          <br />if ( ! $this-&gt;image_lib-&gt;<strong>resize</strong>())<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;echo $this-&gt;image_lib-&gt;<strong>display_errors</strong>();<br />
+            
+          <br />$config['image_library'] = 'netpbm';<br />
+            $config['library_path'] = '/usr/bin/';<br />
+            $config['source_image']	= '/path/to/mypic.jpg';<br />
+            $config['rotation_angle'] = 'hor'; // vrt,90,180,270<br />
+            <br />
+            $this-&gt;image_lib-&gt;<strong>initialize</strong>($config); <br />
+            <br />
+            if ( ! $this-&gt;image_lib-&gt;<strong>rotate</strong>())<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;echo $this-&gt;image_lib-&gt;display_errors();<br />
+            
+          <br />$this-&gt;image_lib-&gt;<strong>clear</strong>();
+          <br />$config['source_image']	= '/path/to/mypic.jpg';<br />
+            $config['wm_text'] = 'Copyright 2006 - John Doe';<br />
+            $config['wm_type'] = 'text';<br />
+            $config['wm_font_path'] = './system/fonts/texb.ttf';<br />
+            $config['wm_font_size']	= '16';<br />
+            $config['wm_font_color'] = 'ffffff';<br />
+            $config['wm_vrt_alignment']  = 'bottom';<br />
+            $config['wm_hor_alignment']  = 'center';<br />
+            $config['wm_padding']  = '20';<br />
+            <br />
+            $this-&gt;image_lib-&gt;initialize($config); <br />
+            <br />
+            $this-&gt;image_lib-&gt;<strong>watermark</strong>();
+            <br />
+            <br />
+          <strong><em>Note:</em></strong><em>   class only works on  files with &quot;write&quot;  permissions. Like, 777.</em>
+          <br />
+          <kbd>^</kbd>See the actual doc for more configuration options (like overlay).</td>
+        </tr>
+    </table>
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/input.html" class=""><br />
+    Input and Security Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><p><strong>Security Filtering</strong>
+          <br />The security filtering function is called automatically when a new <a href="../general/objects.html">controller</a> is invoked.
+          <br />
+        </p>
+          <p>-Destroys the global GET array.<br />
+            -Destroys all global variables if <em>register_globals=true<br />
+              -</em>Filters the POST/COOKIE keys, allows only alpha-numeric (and a few other) characters.<br />
+            -XSS (Cross-site Scripting Hacks) filtering.<br />
+            -Normalize newlines to \n
+            <br />
+            <br />
+            <strong>XSS Filtering</strong>          
+            <br />$data = $this-&gt;input-&gt;<strong>xss_clean</strong>($data); <br />
+          </p>
+          <p>If you want the filter to run automatically, enable it by opening your <kbd>application/config/config.php</kbd> file and setting this:            </p>
+          <p>$config['global_xss_filtering'] = TRUE; <br />if ($this-&gt;input-&gt;xss_clean($file, TRUE)===FALSE)<br />
+            {&nbsp;/* file failed the XSS test */ 
+            }
+            <br />
+            <br />
+            <strong>Posts, Gets, Cookies and Server Variables</strong>
+            <br />/*function returns FALSE (boolean) if  item does not exist;  second optional parameter activates XSS when TRUE */<br />
+          </p>
+          <p>$this-&gt;input-&gt;<strong>post</strong>('some_data', TRUE);<br />
+                $this-&gt;input-&gt;<strong>get</strong>('some_data', TRUE);<br />
+          $this-&gt;input-&gt;<strong>get_post</strong>('some_data', TRUE); <br />
+          $this-&gt;input-&gt;<strong>cookie</strong>('some_data', TRUE);          <br />
+          $this-&gt;input-&gt;<strong>server</strong>('some_data');
+          <br />
+          echo $this-&gt;input-&gt;<strong>ip_address</strong>();//invalid=0.0.0.0 
+          <br />          
+          </p>
+          <p>if ( ! $this-&gt;input-&gt;<strong>valid_ip</strong>(<var>$ip</var>))<br />
+            { echo 'Not Valid';            } 
+            else            { echo 'Valid'; }
+            <br />
+            </p>
+          <p>$this-&gt;input-&gt;<strong>user_agent</strong>()
+            <br />
+            /* Returns the user agent (web browser) being used by the current user. Returns FALSE if it's not available. */</p></td>
+        </tr>
+      </table>
+    <br />
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/loader.html" class="">Loader Class</a>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode">$this-&gt;<strong>load</strong>-&gt;<strong>library</strong>('<var>class</var>', <samp>$config</samp>, <kbd>'object'</kbd>); <br />
+          //  class converted to $this-&gt;<em>method</em>:<br />
+          $this-&gt;load-&gt;library('class', '', 'my_class');<br />
+          $this-&gt;my_class <br />
+          $string = $this-&gt;load-&gt;<strong>view</strong>('<var>myfile</var>', '', <kbd>true</kbd>); <br />
+          $this-&gt;load-&gt;<strong>model</strong>('<var>blog/queries</var>');<br />
+          $this-&gt;load-&gt;model('<var>Model_name</var>', '<kbd>fubar</kbd>');<br />
+          $this-&gt;<kbd>fubar</kbd>-&gt;function(); <br />
+          $this-&gt;load-&gt;<strong>database</strong>('<var>options</var>', <kbd>true/false</kbd>)<br />
+          $this-&gt;load-&gt;<strong>scaffolding</strong>('<var>table_name</var>') <br />
+          $this-&gt;load-&gt;<strong>vars</strong>(<samp>$array</samp>) <br />
+          $this-&gt;load-&gt;<strong>helper</strong>('<var>file_name</var>')<br />
+          $this-&gt;load-&gt;<strong>plugin</strong>('<var>file_name</var>')<br />
+          $this-&gt;load-&gt;<strong>lang</strong>('<var>file_name</var>')<br />
+          $this-&gt;load-&gt;<strong>config</strong>('<var>file_name</var>') <br />
+          $this-&gt;load-&gt;<strong>file</strong>('<var>filepath/filename</var>', <kbd>true/false</kbd>)</td>
+      </tr>
+    </table>
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/language.html" class=""><br />
+Language Class</a><br />
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode"><p>Language files are typically stored in your <dfn>system/language</dfn> directory.  Alternately you can create a folder called <kbd>language</kbd> inside
+      your <kbd>application</kbd> folder and store them there.  HerbIgniter will look first in your <dfn>system/application/language</dfn> directory.  If the directory does not exist or the specified language is not located there HI will instead look in your global <dfn>system/language</dfn> folder.</p>
+      <p>$lang['language_key'] = &quot;The actual message to be shown&quot;;</p>
+      <p>$lang['<var>error</var>_email_missing'] = &quot;You must submit an email&quot;;<br />
+        $lang['<var>error</var>_url_missing'] = &quot;You must submit a URL&quot;;<br />
+        $lang['<var>error</var>_username_missing'] = &quot;No username&quot;;</p>
+      <p>$this-&gt;lang-&gt;load('<samp>filename</samp>', '<dfn>language</dfn>');</p>
+      <p>$this-&gt;lang-&gt;<strong>line</strong>('<samp>language_key</samp>');</p></td>
+  </tr>
+</table>
+<a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/pagination.html" class=""><br />
+</a></td>
+<td valign="top" width="25%"><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/sessions.html" class="">    </a><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/output.html" class=""> Output Class</a><br />
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode"><p>$this-&gt;<strong>output</strong>-&gt;<strong>set_output</strong>($data);<br />
+      $string = $this-&gt;output-&gt;<strong>get_output</strong>();<br />
+      $this-&gt;output-&gt;<strong>set_header</strong>(&quot;HTTP/1.0 200 OK&quot;); //etc<br />
+      $this-&gt;output-&gt;<strong>set_status_header</strong>('420'); // 401..500..<br />
+      $this-&gt;output-&gt;<strong>enable_profiler</strong>(TRUE);<br />
+      $this-&gt;output-&gt;<strong>cache</strong>();<kbd> -&gt; </kbd>see documentation <a href="general/caching.html">here</a><br />
+    </p></td>
+  </tr>
+</table>
+<br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/page.html" class="">Page Class</a><br />
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode"><p>$this-&gt;<strong>page</strong>-&gt;<strong>set_head</strong>($data);<br />
+        $string = $this-&gt;page-&gt;<strong>get_head</strong>();<br />
+        <br />
+        $this-&gt;page-&gt;<strong>set_body</strong>($data);<br />
+        $string = $this-&gt;page-&gt;<strong>get_body</strong>();<br />
+        <br />
+        $this-&gt;page-&gt;<strong>onload</strong>($data);<br />
+        $string = $this-&gt;page-&gt;<strong>add_onload</strong>();<br />
+        <br />
+        $this-&gt;page-&gt;<strong>set_header</strong>(&quot;HTTP/1.0 200 OK&quot;); //etc<br />
+        $this-&gt;page-&gt;<strong>set_status_header</strong>('401');<br />
+        $this-&gt;page-&gt;<strong>enable_profiler</strong>(TRUE);<br />
+        $this-&gt;page-&gt;<strong>cache</strong>();<kbd> -&gt; </kbd>see documentation <a href="general/caching.html">here</a><br />
+      </p></td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/pagination.html" class=""><br />
+Pagination Class</a><br />
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">$this-&gt;load-&gt;library(<strong>'pagination'</strong>);<br />
+      <br />
+      $config['base_url'] = 'http://x.com/index.php/pg/';<br />
+      $config['total_rows'] = '200';<br />
+      $config['per_page']  = '20'; <br />
+      <br />
+      $this-&gt;<strong>pagination</strong>-&gt;<strong>initialize</strong>($config); <br />
+      <br />
+      echo  $this-&gt;pagination-&gt;<strong>create_links</strong>();</td>
+  </tr>
+</table>
+<br />
+<a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/sessions.html" class="">Session Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><p><kbd>^</kbd>Read the docs on this one (click the link above).</p>
+          <p>$this-&gt;load-&gt;library(<strong>'session'</strong>);<br />
+            $session_id = $this-&gt;<strong>session</strong>-&gt;<strong>userdata</strong>('<samp>session_id</samp>');<br />
+            <br />
+$this-&gt;session-&gt;<strong>set_flashdata</strong>('item', 'value');<br />
+$this-&gt;session-&gt;<strong>flashdata</strong>('item');<br />
+$this-&gt;session-&gt;<strong>keep_flashdata</strong>('item');<br />
+          </p></td>
+      </tr>
+    </table>
+    
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/trackback.html" class=""><br />
+    Trackback Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><p><kbd>^</kbd>Read the docs on this one (click the link above). </p>
+          <p>///////////////////// Sending:</p>
+          <p>$this-&gt;load-&gt;library(<strong>'trackback'</strong>);<br />
+            <br />
+            $tb_data = array(<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ping_url'&nbsp;&nbsp;=&gt; 'http://x.com/trackback/456',<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'url'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&gt; 'http://www.my-x.com/blog/entry/123',<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'title'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&gt; 'The Title of My Entry',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'excerpt'&nbsp;&nbsp;&nbsp;=&gt; 'The entry content.',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'blog_name' =&gt; 'My Blog Name',<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'charset'&nbsp;&nbsp;&nbsp;=&gt; 'utf-8'<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br />
+            <br />
+            if ( ! $this-&gt;trackback-&gt;<strong>send</strong>($tb_data))<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo $this-&gt;trackback-&gt;<strong>display_errors</strong>();<br />
+            else<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;echo 'Trackback was sent!';</p>
+          <p>///////////////////// P-p-<a href="http://processing.org" target="_blank">processing</a>:</p>
+          <p> $this-&gt;load-&gt;<strong>database</strong>();<br />
+<br />
+if ($this-&gt;uri-&gt;segment(3) == FALSE)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;<strong>trackback</strong>-&gt;<strong>send_error</strong>(&quot;Unable to find entry ID&quot;);<br />
+<br />
+if ( ! $this-&gt;trackback-&gt;<strong>receive</strong>())<br />
+&nbsp;&nbsp;&nbsp;&nbsp;$this-&gt;trackback-&gt;send_error(&quot;Did not contain valid data&quot;);<br />
+<br />
+$data = array(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;'tb_id'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&gt; '',<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'entry_id'&nbsp;&nbsp;&nbsp;=&gt; $this-&gt;uri-&gt;segment(3),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'url'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&gt; $this-&gt;trackback-&gt;data('url'),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;'title'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&gt; $this-&gt;trackback-&gt;data('title'),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;'excerpt'&nbsp;&nbsp;&nbsp;&nbsp;=&gt; $this-&gt;trackback-&gt;data('excerpt'),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'blog_name'&nbsp;=&gt; $this-&gt;trackback-&gt;data('blog_name'),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'tb_date'&nbsp;=&gt; time(),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'ip_address' =&gt; $this-&gt;input-&gt;ip_address()<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br />
+<br />
+$sql = $this-&gt;db-&gt;insert_string('trackbacks', $data);<br />
+$this-&gt;db-&gt;query($sql);<br />
+<br />
+$this-&gt;trackback-&gt;<strong>send_success</strong>();</p></td>
+      </tr>
+    </table>
+    
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/parser.html" class=""><br />
+    Template Parser Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><kbd>^</kbd>Read the docs on this one (click the link above). </td>
+      </tr>
+    </table>
+    
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/typography.html" class=""><br />
+    Typography Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><p><kbd>^</kbd>Read the docs on this one (click the link above). It's considered processor intensive and <a href="general/caching.html">caching</a> is recommended.</p>
+          <p>$this-&gt;load-&gt;library(<strong>'typography'</strong>);<br />
+            $string = $this-&gt;<strong>typography</strong>-&gt;<strong>auto_typography</strong>($string);<br />
+$string = $this-&gt;typography-&gt;auto_typography($string,<kbd>FALSE</kbd>);<br />
+            $string = $this-&gt;typography-&gt;<strong>format_characters</strong>($string);<br />
+$string = $this-&gt;typography-&gt;<strong>nl2br_except_pre</strong>($string);<br />
+$this-&gt;typography-&gt;<strong>protect_braced_quotes</strong> = TRUE; <br />
+          </p></td>
+      </tr>
+    </table>
+    
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/unit_testing.html" class=""><br />
+    Unit Testing Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><kbd>^</kbd>Read the docs on this one (click the link above). </td>
+      </tr>
+    </table>
+    
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/uri.html" class=""><br />
+    URI Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><p><kbd>          *</kbd><em>This class is initialized automatically by the system so there is no need to do it manually.</em></p>
+          <p>Permits you to retrieve a specific segment. Where <var>n</var> is the segment number you wish to retrieve.
+            Segments are numbered from left to right. For example, if your full URL is this:</p>
+          <strong>http://x.com/index.php/local/pot/dispensaries</strong>
+          <p>$dispensaries = $this-&gt;<strong>uri</strong>-&gt;<strong>segment</strong>(3, 'ifnoseg');<br />
+  <br />
+  $this-&gt;uri-&gt;<strong>rsegment</strong>(<var>n</var>) // &quot;route segment&quot;</p>
+<p>$this-&gt;uri-&gt;<strong>slash_segment</strong>(<var>n</var>)</p>
+<p>This function is almost identical to <dfn>$this-&gt;uri-&gt;segment()</dfn>,  adds a trailing and/or leading slash based on the second
+  parameter.  If the parameter is not used, a trailing slash added.  </p>
+$this-&gt;uri-&gt;slash_segment(<var>3</var>);<br />
+$this-&gt;uri-&gt;slash_segment(<var>3</var>, <strong>'leading'</strong>);<br />
+$this-&gt;uri-&gt;slash_segment(<var>3</var>, <strong>'both'</strong>);
+<p>Returns:<br />
+  1. 
+  segment/<br />
+  2. 
+  /segment<br />
+  3. 
+  /segment/</p>$this-&gt;uri-&gt;<strong>slash_rsegment</strong>(<var>n</var>)
+<p>$this-&gt;uri-&gt;<strong>uri_to_assoc</strong>(<var>n</var>)</p>
+<p>This function lets you turn URI segments into and associative array of key/value pairs.  </p>$this-&gt;uri-&gt;<strong>ruri_to_assoc</strong>(<var>n</var>)
+<p>Creates an associative array using the
+            re-routed URI in the event you are using HerbIgniter's <a href="../general/routing.html">URI Routing</a> feature.</p>$this-&gt;uri-&gt;<strong>assoc_to_uri</strong>()
+<p>Takes an associative array as input and generates a URI string from it.  </p>
+<p>$array = array('product' =&gt; 'shoes', 'size' =&gt; 'large', 'color' =&gt; 'red'); 
+  $str = $this-&gt;uri-&gt;assoc_to_uri($array);<br />
+  
+  // Produces:  product/shoes/size/large/color/red</p>
+<p>$this-&gt;uri-&gt;<strong>uri_string</strong>() // Returns string complete URI.</p>
+<p>http://example.com/index.php/news/local/345<br />
+  The function would return this: /news/local/345          </p>
+<p>$this-&gt;uri-&gt;<strong>ruri_string</strong>(<var>n</var>)
+</p>
+<p>This function is identical to the previous one, except that it returns the
+  re-routed URI in the event you are using HerbIgniter's <a href="../general/routing.html">URI Routing</a> feature.</p>$this-&gt;uri-&gt;<strong>total_segments</strong>()
+<p>Returns the total number of segments.</p>$this-&gt;uri-&gt;<strong>total_rsegments</strong>()
+<p>This function is identical to the previous one, except that it returns the total number of segments in your
+  re-routed URI in the event you are using HerbIgniter's <a href="../general/routing.html">URI Routing</a> feature.</p>$this-&gt;uri-&gt;<strong>segment_array</strong>()
+<p>Returns an array containing the URI segments.  For example:</p> <p>$segs = $this-&gt;uri-&gt;segment_array();<br />
+  <br />
+  foreach ($segs as $segment)&nbsp;echo $segment . '&lt;br /&gt;';<br />
+  </p>
+<p>$this-&gt;uri-&gt;<strong>rsegment_array</strong>()</p></td>
+      </tr>
+    </table>
+    
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/user_agent.html" class=""><br />
+    User Agent Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><p>$this-&gt;load-&gt;library(<strong>'user_agent'</strong>);<br />
+          <br />
+          if ($this-&gt;<strong>agent</strong>-&gt;<strong>is_browser</strong>())<br />
+  &nbsp;&nbsp;&nbsp;&nbsp;$agent  = $this-&gt;agent-&gt;<strong>browser</strong>().' '.$this-&gt;agent-&gt;<strong>version</strong>();<br />
+          elseif ($this-&gt;agent-&gt;<strong>is_robot</strong>())<br />
+  &nbsp;&nbsp;&nbsp;&nbsp;$agent = $this-&gt;agent-&gt;<strong>robot</strong>();<br />
+          elseif ($this-&gt;agent-&gt;<strong>is_mobile</strong>())<br />
+  &nbsp;&nbsp;&nbsp;&nbsp;$agent = $this-&gt;agent-&gt;<strong>mobile</strong>();<br />
+          else<br />
+  &nbsp;&nbsp;&nbsp;&nbsp;$agent = 'Unidentified User Agent';<br />
+  <br />
+          echo $agent;<br />
+  <br />
+          echo $this-&gt;agent-&gt;<strong>platform</strong>(); //Platform (Win/Lin/Mac/etc)</p>$this-&gt;agent-&gt;referrer()
+<p>The referrer, if the user agent was referred from another site. Typically you'll test for this as follows:</p> <p>if ($this-&gt;agent-&gt;is_referral())<br />
+  {&nbsp;&nbsp;&nbsp;&nbsp;echo $this-&gt;agent-&gt;referrer(); 
+  }</p>
+<p>$this-&gt;agent-&gt;agent_string()
+</p>
+<p>Returns a string containing the full user agent string.  Typically it will be something like this:</p>
+<em>Mozilla/5.0 (Macintosh; U; Intel Mac OS X; en-US; rv:1.8.0.4) Gecko/20060613 Camino/1.0.2</em>
+          <p>if ($this-&gt;agent-&gt;accept_lang('en'))<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;echo 'You might accept English!';<br />
+}</p>
+          <p>if ($this-&gt;agent-&gt;accept_charset('utf-8'))<br />
+            {<br />&nbsp;&nbsp;&nbsp;&nbsp;echo 'You browser supports UTF-8!';<br />
+            }</p></td>
+      </tr>
+    </table>
+    
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/xmlrpc.html" class=""><br />
+    XML-RPC Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><kbd>^</kbd>Read the docs on this one (click the link above).</td>
+      </tr>
+    </table>
+    
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/libraries/zip.html" class=""><br />
+    Zip Encoding Class</a><br />
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode"><p>$this-&gt;<strong>zip</strong>-&gt;<strong>add_data</strong>($name, $data);<br />
+          $this-&gt;zip-&gt;<strong>add_dir</strong>('myfolder'); // Creates a folder in the zip<br />
+          $this-&gt;zip-&gt;<strong>read_file</strong>('/path/to/photo.jpg');<br />
+$this-&gt;zip-&gt;<strong>read_dir</strong>('/some/path/'); </p>
+          <p>// Creates a file named myarchive.zip<br />
+$this-&gt;zip-&gt;<strong>archive</strong>('/path/to/folder/myarchive.zip'); </p>
+          <p>// Download the file.  Name it &quot;my_backup.zip&quot;<br />
+            $this-&gt;zip-&gt;<strong>download</strong>('my_backup.zip'); </p>
+          <p>$zip_file = $this-&gt;zip-&gt;<strong>get_zip</strong>();<br />
+              <br />
+              <kbd>$this-&gt;zip-&gt;<strong>clear_data</strong>();</kbd><br />
+          </p></td>
+      </tr>
+    </table></td>
+<td valign="top" width="25%"><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/ajax_helper.html" class="">Ajax Helper
+</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br />
+<a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/ajax_helper.html" class="">  </a><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/array_helper.html" class="">Array Helper</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br />
+<a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/audio_helper.html" class="">Audio Helper</a>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/biz_helper.html" class=""><br />
+Biz Helper</a>
+
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/compatibility_helper.html" class=""><br />
+Compatibility Helper</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/cookie_helper.html" class=""><br />
+Cookie Helper</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/country_helper.html" class="">Country Helper</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/css_helper.html" class="">CSS Helper
+</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/css_helper.html" class=""></a><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/data_helper.html" class="">Data Helper</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/date_helper.html" class="">Date Helper</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/directory_helper.html" class="">Directory Helper</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/download_helper.html" class="">Download Helper</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/email_helper.html" class="">Email Helper</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/file_helper.html" class="">File Helper</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/form_helper.html" class="">Form Helper
+</a>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="100%" class="tinycode">Coming soon.</td>
+  </tr>
+</table>
+<br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/form_helper.html" class="">  </a>
+</td>
+<td valign="top" width="25%"><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/geshi_helper.html" class="">GeSHi Helper</a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/hash_helper.html" class="">Hash Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/hash_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/html_helper.html" class="">HTML Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/html_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/inflector_helper.html" class="">Inflector Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/inflector_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/data_helper.html" class="">JS Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/data_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/country_helper.html" class="">Menu Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/country_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/number_helper.html" class="">Number Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/number_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/path_helper.html" class="">Path Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/path_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/query_helper.html" class="">Query Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/query_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/recaptcha_helper.html" class="">reCAPTCHA Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/recaptcha_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/security_helper.html" class="">Security Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/security_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/smiley_helper.html" class="">Smiley Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/smiley_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/string_helper.html" class="">Social Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/string_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/string_helper.html" class="">String Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/string_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/text_helper.html" class="">Text Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/text_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/typography_helper.html" class="">Typography Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/typography_helper.html" class="">  </a><br /><a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/url_helper.html" class="">URL Helper<br />
+  </a>
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="100%" class="tinycode">Coming soon.</td>
+    </tr>
+  </table>
+  <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/url_helper.html" class="">  </a><br />
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/xml_helper.html" class="">XML Helper<br />
+    </a>
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      <tr>
+        <td width="100%" class="tinycode">Coming soon.</td>
+      </tr>
+    </table>
+    <a href="http://www.gudagi.net/herbigniter/HerbIgniter_1.7.2/HI_user_guide/helpers/xml_helper.html" class="">    </a>
+
+<h3>&nbsp;</h3></td>
+</tr>
+</table>
+
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<br /><a href="#top">Top of Page</a>
+<br /><a href="http://gudagi.net/herbigniter/">HerbIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://gudagi.com/">Gudagi</a>
+</div>
+
+
+</body>
+</html>

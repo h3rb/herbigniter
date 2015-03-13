@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array Helper : HerbIgniter User Guide</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<script type="text/javascript" src="../nav/nav.js"></script>
+<script type="text/javascript" src="../nav/prototype.lite.js"></script>
+<script type="text/javascript" src="../nav/moo.fx.js"></script>
+<script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Herb' />
+<meta name='description' content='HerbIgniter User Guide' />
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>HerbIgniter User Guide Version 1.7.2</h1></td>
+<td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://gudagi.net/herbigniter/">HerbIgniter Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+Country Helper
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="gudagi.net/herbigniter/HI_user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Country Helper</h1>
+
+<p>The Country Helper file contains functions that assist in working with foreign governments. This includes linguistics and fiscal policy (currency exchange, language association). It also provides geolocation. </p>
+<p>The language routines in this helper I used at <a href="http://www.pickpark.com">PickPark.com</a> - it basically relies on english keywords and files stored in UTF-8. It also uses the <a href="http://www.maxmind.com">Maxmind</a> GeoIP Database when available, and we provide some DB wrappers for storing these objects in tables in your database.</p>
+<p>This helper also uses the <a href="finance.xaviermedia.com/">Xavier Finance</a> free exchange services for international exchange rates. The accuracy is good enough for most applications, but it only supports a subset of its full data set (which you have to pay for). It's probably all you need, but you can always visit them to enhance this.</p>
+
+
+<h2>Loading this Helper</h2>
+
+<p>This helper is loaded using the following code:</p>
+<code>$this->load->helper('country');</code>
+
+<p>The following functions are available:</p>
+
+<h2>lang( line, id='' )</h2>
+
+<p>Fetches a language variable and optionally outputs a form label.</p>
+<p>Example:</p>
+
+<code> $page-&gt;append_body( lang( &quot;Some line.&quot; ) );
+</code>
+
+
+<h2>show_my_language()</h2>
+
+<p>Simple  function that echos your HTTP_ACCEPT_LANGUAGE $_SERVER superglobal. 
+  Usage example:</p>
+
+<code>$my_lang = show_my_language();</code>
+<h2>find_key_in_file( filename_prefix, code)</h2>
+<p>  Usage: returns a particular code in a simplified keyfile
+  by loading the file, finding the key, returning the value,
+  closing the file and tossing all keys and values read. The keyfiles have extensions that match their respective language codes. File naming examples: <strong>thisfile.eng</strong> (english), <strong>thisfile.spa</strong> (spanish), <strong>thisfile.ger</strong> (german), files that can be kept in a sub-directory and accessed during outputting of a page. This lets you translate your website's content into several different files. It does not filter HTML! This is also a function that is useful if you only need 1 or 2 items from a common file, like 'navigation.eng' or 'index.eng'<br />
+ </p>
+<ul>
+  <li>Linguistic translation text file example (in our example, this is a file called<strong> ourfile.eng</strong>):<br />
+    <br />
+    [[codename]]<br />
+    Insert text or mixed &lt;b&gt;html&lt;/b&gt; on next line<br />
+    [[end]] or [[next codename]]<br />
+    &lt;blank line at end of file&gt;  </li>
+</ul>
+<p> 
+  Usage example:</p>
+<code>$form_name_input_tag_text = find_key_in_file( 'langs/ourfile', 'form_name_input_tag_text' );<br />
+echo $form_name_input_tag_text , form_input( ... );
+</code>
+<h2>prefetch_keys( filename )</h2>
+<p>Implements a simple key/value file reading algorithm that reads keys from a file.<br />
+</p>
+<ul>
+  <li>Example:  <br />
+    <br />
+    [[key1]]<br />
+    Value 1<br />
+    [[key2]]<br />
+    Value 2<br />
+    [[empty_key]] [[non_empty]] 1 [[another_key]] 2 ...<br />
+  </li>
+  </ul>
+<p>Usage example:</p>
+<code>$keys = prefetch_keys( &quot;path/to/someKVfile.txt&quot; );<br />
+print_r($keys);</code>
+<h2>prefetch_keys_special( filename )</h2>
+<p>  Option to prefetch and return enumerated array of key/value pairs, indexed by keynames. Currently does not provide any code injection security on keynames or values.<br />
+</p>
+<ul>
+  <li>Example:<br />
+    <br />
+    [[key1]]<br />
+    Value 1<br />
+    [[key2]]<br />
+    Value 2<br />
+    [[empty_key]] [[non_empty]] 1 [[another_key]] 2 ...<br />
+  </li>
+  </ul>
+<p>Usage example:</p>
+<code>$keys = prefetch_keys_special( &quot;path/to/someKVfile.txt&quot; );<br />
+print_r($keys);</code>
+<h2>find_language( )</h2>
+<p>ISO 3166 Country Codes; returns ISO codes for countries, with the addition of MaxMind-specific codes for Europe, Asia Pacific Region, Anonymous Proxy and Satellite Provider. Please note that &quot;EU&quot; and &quot;AP&quot; codes are only used when a specific country code has not been designated (see FAQ). Blocking or re-directing by &quot;EU&quot; or&quot;AP&quot; will only affect a small portion of IP addresses. Instead, you should list the countries you want to block/re-direct individually. It has a couple of fallbacks, including one to HTTP_ACCEPT_LANGUAGE. This function is probably the most complete free function on the net. It uses both the ISO country codes, and normalizes them along with Maxmind's codes.</p>
+<p>&nbsp;</p>
+<p><span class="critical">Use this function to determine what to name your file (the extension) for a particular language. It returns things like 'eng', 'spa', etc.. Read it in the HerbIgniter source code.</span><br />
+</p>
+<p>Usage example:</p>
+<code>$our_language_code = find_language();<br />
+</code>
+<h2>global_lang_prefetch( prefix )</h2>
+<p> Option to prefetch and return enumerated array of key/value pairs, indexed by keynames. Currently does not provide any code injection security on keynames or values.<br />
+</p>
+<ul>
+  <li>Example:<br />
+    <br />
+    [[key1]]<br />
+    Value 1<br />
+    [[key2]]<br />
+    Value 2<br />
+    [[empty_key]] [[non_empty]] 1 [[another_key]] 2 ...<br />
+  </li>
+</ul>
+<p>Usage example:</p>
+<code>$keys = prefetch_keys( &quot;path/to/someKVfile.txt&quot; );<br />
+print_r($keys);</code>
+<h2><br />
+  prefetch_language( prefix )</h2>
+<p> Returns a parsed K/V file in the appropriate language, defaulting to US English &quot;prefix.eng&quot; file in the case that none is available for the human language we are detecting.<br />
+</p>
+<p>Usage example:</p>
+<code>$translated=prefetch_language( &quot;lang/shoppingcart&quot; );<br />
+print_r($translated); </code>
+<h2>merge_keys( a, b )</h2>
+<p> Merges multiple files. For instance, if you have a standard navigation area and you have translations for it, use merge_keys() to merge the navigation language file with the content language file.<br />
+  </p>
+<p>Usage example:</p>
+<code>// Assuming we speak English and it has been detected:<br />
+$navigation = prefetch_language( &quot;lang/nav&quot; ); // reads file lang/nav.eng<br />
+$indexpage = prefetch_language( &quot;lang/index&quot; ); // reads file lang/index.eng<br /> 
+$translated = merge_keys( $navigation, $indexpage );
+</code>
+<h2>show_keyfile( filename )</h2>
+<p> Option helps you debug bad language files.<br />
+  </p>
+<p>Usage example:</p>
+<code>$keys = show_keyfile( &quot;path/to/someKVfile.txt&quot; );</code>
+<h2>fast_lang_block( prefix, code, language )</h2>
+<p> Option to prefetch and return a key that is in a file. This is sort of like &quot;immediate mode&quot; - its not very optimal except it speeds up development. No checking for supported files, returns empty data and/or throws error when no such file exists.</p>
+<p>Usage example:</p>
+<code>$key = fast_lang_block( &quot;path/to/someKVfile&quot;,  &quot;some_key&quot;, $our_language_code );<br />
+print_r($keys);</code>
+<h2>safe_lang_block( prefix, key, language )</h2>
+<p>Option to prefetch and return a key that is in a file. This is sort of like &quot;immediate mode&quot; - its not very optimal except it speeds up development.     Checks to see if the language is supported, defaults to English, does not provide code injection protection.<br />
+  </p>
+<p>Usage example:</p>
+<code>$key = safe_lang_block( &quot;path/to/someKVfile&quot;,  &quot;some_key&quot;, $our_language_code );<br />
+print_r($keys);</code>
+<h2>find_currency( lang, country_name=&quot;&quot;, region_name=&quot;&quot; )</h2>
+<p> Returns a code like EUR, USD, etc..<br />
+  </p>
+<p>Usage example:</p>
+<code>$uses_currency = find_currency( find_language() );<br />
+</code>
+<h2>exchange( from, to, amount, time )</h2>
+<p> Uses Xavier Finance to perform a real-time exchange of currency based on a value at a particular time. Since exchange rates are always changing, Xavier helps by providing time-indexed currency exchange rates that will improve your bottom line. Make sure to use the transaction time to set this to the appropriate date when performing this operation on a refund, for instance.<br />
+  </p>
+<p>Usage example:<code>$new_amount = exchange( &quot;USD&quot;, &quot;EUR&quot;, &quot;22.50&quot;, &quot;12/22/2009&quot; );</code></p>
+<h2>currency_combo( name, selected )</h2>
+<p> Generates a currency combo box that currently supports about 17 codes. You might want to find another source for your data, but here's a start. This function also works with <em>currency_to_code</em>().</p>
+<blockquote>
+  <p>1 =&gt; &quot;EUR&quot;, //$c[&quot;Germany&quot;],<br />
+    2 =&gt; &quot;EUR&quot;,  //$c[&quot;France&quot;],<br />
+    3 =&gt; &quot;GBP&quot;,  //$c[&quot;United Kingdom&quot;],<br />
+    4 =&gt; &quot;EUR&quot;,  //$c[&quot;Italy&quot;],<br />
+    5 =&gt; &quot;EUR&quot;,  //$c[&quot;Luxenburg&quot;],<br />
+    6 =&gt; &quot;EUR&quot;,  //$c[&quot;Netherlands&quot;],<br />
+    7 =&gt; &quot;EUR&quot;,  //$c[&quot;Austria&quot;],<br />
+    8 =&gt; &quot;RUB&quot;,  //$c[&quot;Russia&quot;],<br />
+    9 =&gt; &quot;EUR&quot;,  //$c[&quot;Suisse&quot;],<br />
+    10 =&gt; &quot;USD&quot;, //$c[&quot;United States&quot;], <br />
+    11 =&gt; &quot;CAD&quot;, //$c[&quot;Canada&quot;],<br />
+    12 =&gt; &quot;EUR&quot;, //$c[&quot;Spain&quot;],<br />
+    13 =&gt; &quot;EUR&quot;, //$c[&quot;Portugal&quot;],<br />
+    14 =&gt; &quot;EUR&quot;, //$c[&quot;India&quot;],<br />
+    15 =&gt; &quot;USD&quot;,    //$c[&quot;Argentina&quot;]  ARS<br />
+    16 =&gt; &quot;USD&quot;,    //$c[&quot;Brazil&quot;]  BRL<br />
+    17 =&gt; &quot;EUR&quot; );  //$c[&quot;Finland&quot;]  <br />
+  </p>
+</blockquote>
+<p>Usage example:</p>
+<code>$page-&gt;append_body( currency_combo( &quot;currency_form_element&quot;, 4 ) );<br />
+</code>
+<h2>currency_to_code( currency )</h2>
+<p> Used in conjunction with <em>currency_combo</em>(), this function converts a numeric value returned from the above combo to a 3-letter currency code (like &quot;USD&quot;).<br />
+  </p>
+<p>Usage example:</p>
+<code>$code = currency_to_code( 3 );</code>
+<h2> getgeo( ref_table, ref_id, all_or_newest=FALSE, table=&quot;maxmind&quot;)</h2>
+<p> Looks for a previous record for a particular DB table (such as &quot;users&quot;) and id (like &quot;6&quot;) -- the GeoIP log data is in a table is (by default) called 'maxmind' and has the following fields:</p>
+<p> &quot;ref_id&quot;,      $ref_id,<br />
+&quot;ref_table&quot;,   $ref_table,<br />
+&quot;geoip&quot;,       $_SERVER['REMOTE_ADDR'],<br />
+&quot;geocountry&quot;,  $record-&gt;country_code,<br />
+&quot;geocountry3&quot;, $record-&gt;country_code3,<br />
+&quot;geoname&quot;,     $record-&gt;country_name,<br />
+&quot;georegion&quot;,   $record-&gt;region,<br />
+&quot;geocity&quot;,     $record-&gt;city,<br />
+&quot;geozip&quot;,      $record-&gt;postal_code,<br />
+&quot;geolat&quot;,      $record-&gt;latitude,<br />
+&quot;geolong&quot;,     $record-&gt;longitude,<br />
+&quot;geodma&quot;,      $record-&gt;dma_code,<br />
+&quot;geoarea&quot;,     $record-&gt;area_code,<br />
+&quot;geotype&quot;,     GEOIP_STANDARD,<br />
+&quot;geolang&quot;,     $record-&gt;country_code<br />
+</p>
+<p>Usage example:</p>
+<code>$geoinfo = getgeo();</code>
+<h2>putgeo( ref_table, ref_id, id=NULL, table=&quot;maxmind&quot; )</h2>
+<p> Stick current information in the DB table that references an IP with a table and id.<br />
+  </p>
+<p>Usage example:</p>
+<code>putgeo( &quot;users&quot;, $user_id );</code>
+<h2>maxmind(  )</h2>
+<p> Returns the result of a request to Maxmind containing data for the current user/session, similar to <em>getgeo</em>(), but without working directly with a database.<br />
+</p>
+<p>Usage example:</p>
+<code>$maxmind_info = maxmind();</code> </div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+Previous Topic:&nbsp;&nbsp; <a href="../libraries/zip.html">Zip Encoding Class</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+Next Topic:&nbsp;&nbsp;<a href="compatibility_helper.html">Compatibility Helper</a></p>
+<p><a href="http://gudagi.net/herbigniter/">HerbIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://gudagi.com/">Gudagi</a></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array Helper : HerbIgniter User Guide</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<script type="text/javascript" src="../nav/nav.js"></script>
+<script type="text/javascript" src="../nav/prototype.lite.js"></script>
+<script type="text/javascript" src="../nav/moo.fx.js"></script>
+<script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Herb' />
+<meta name='description' content='HerbIgniter User Guide' />
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>HerbIgniter User Guide Version 1.7.2</h1></td>
+<td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://gudagi.net/herbigniter/">HerbIgniter Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+Array Helper
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="gudagi.net/herbigniter/HI_user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>Array Helper</h1>
+
+<p>The Array Helper file contains functions that assist in working with arrays.</p>
+
+
+<h2>Loading this Helper</h2>
+
+<p>This helper is loaded using the following code:</p>
+<code>$this->load->helper('array');</code>
+
+<p>The following functions are available:</p>
+
+<h2>element()</h2>
+
+<p>Lets you fetch an item from an array.  The function tests whether the array index is set and whether it has a value.  If
+a value exists it is returned.  If a value does not exist it returns FALSE, or whatever you've specified as the default value via the third parameter.  Example:</p>
+
+<code>
+$array = array('color' => 'red', 'shape' => 'round', 'size' => '');<br />
+<br />
+// returns "red"<br />
+echo element('color', $array);<br />
+<br />
+// returns NULL<br />
+echo element('size', $array, NULL);
+</code>
+
+
+<h2>random_element()</h2>
+
+<p>Takes an array as input and returns a random element from it.  Usage example:</p>
+
+<code>$quotes = array(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"I find that the harder I work, the more luck I seem to have. - Thomas Jefferson",<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Don't stay in bed, unless you can make money in bed. - George Burns",<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"We didn't lose the game; we just ran out of time. - Vince Lombardi",<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"If everything seems under control, you're not going fast enough. - Mario Andretti",<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Reality is merely an illusion, albeit a very persistent one. - Albert Einstein",<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"Chance favors the prepared mind - Louis Pasteur"<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br />
+<br />
+echo random_element($quotes);</code>
+<h2>multipleArrayIntersect()</h2>
+<p>Takes an array as input and returns a random element from it.  Usage example:</p>
+<code>$quotes = array(<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;I find that the harder I work, the more luck I seem to have. - Thomas Jefferson&quot;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Don't stay in bed, unless you can make money in bed. - George Burns&quot;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;We didn't lose the game; we just ran out of time. - Vince Lombardi&quot;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;If everything seems under control, you're not going fast enough. - Mario Andretti&quot;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Reality is merely an illusion, albeit a very persistent one. - Albert Einstein&quot;,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&quot;Chance favors the prepared mind - Louis Pasteur&quot;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;);<br />
+<br />
+echo random_element($quotes);</code>
+<h2>array_delete_by_index(array, array_of_indexes)</h2>
+<p>Takes an array as input and returns an array with the indexes removed from it.</p>
+<h2>array_stack( &amp;$a, $p = '@parent', $c = '@children' )</h2>
+<p>Converts a linear array (like a database query result  set) into a tree, or multi-dimensional array.  Capitalizing on references in PHP, we can 'stack' an array in one pass,  using one loop, like this:</p>
+<code> $node = array();<br />
+$node[1] = array('@parent' =&gt; 0, 'title' =&gt; 'I am node 1.');<br />
+#     ^-----------------------v Link @parent value to key.<br />
+$node[2] = array('@parent' =&gt; 1, 'title' =&gt; 'I am node 2.');<br />
+$node[3] = array('@parent' =&gt; 2, 'title' =&gt; 'I am node 3.');<br />
+$node[4] = array('@parent' =&gt; 1, 'title' =&gt; 'I am node 4.');<br />
+$node[5] = array('@parent' =&gt; 4, 'title' =&gt; 'I am node 5.');<br />
+<br />
+array_stack($node);<br />
+<br />
+$node['leaf'][1]['title'] = 'I am node one.';<br />
+$node['leaf'][2]['title'] = 'I am node two.';<br />
+$node['leaf'][3]['title'] = 'I am node three.';<br />
+$node['leaf'][4]['title'] = 'I am node four.';<br />
+$node['leaf'][5]['title'] = 'I am node five.';<br />
+<br />
+echo '&lt;pre&gt;',print_r($node['tree'],TRUE),'&lt;/pre&gt;';<br />
+</code>
+<h2>array_avg(array, precision=2)</h2>
+<p>Calculate the average of an array of numeric values. Usage example:</p>
+<code>$averages = array_avg( $baseball_stats, 3 );</code>
+<h2>array2js(array, showkeys=true)</h2>
+<p>Calculate the average of an array of numeric values. Usage example:</p>
+<code>$javascript_array = array2js( $php_array );</code>
+<h2>array_merge_recursive_distinct( array1, array2 )</h2>
+<p>PHP's <em>array_merge_recursive</em> does indeed merge arrays, but it converts values with duplicate keys to arrays rather than overwriting the value in the first array with the duplicate value in the second array, as array_merge does. I.e., with <em>array_merge_recursive</em>, this happens (documented behavior):<br />
+ <br />
+<strong>array_merge_recursive(array('key' =&gt; 'org value'), array('key' =&gt; 'new value'));    becomes array('key' =&gt; array('org value', 'new value'));</strong><br />
+</p>
+<p>This function, array_merge_recursive_distinct, does not change the datatypes of the values in the arrays. Matching keys' values in the second array overwrite those in the first array, as is the<br />
+   case with array_merge, i.e.:<br />
+   <strong>array_merge_recursive_distinct(array('key' =&gt; 'org value'), array('key' =&gt; 'new value'));    becomes array('key' =&gt; array('new value'));</strong><br />
+   <br />
+   Parameters are passed by reference, though only for performance reasons. They're not altered by this function.<br />
+   <br />
+   Authors: Daniel &lt;daniel (at) danielsmedegaardbuus (dot) dk,  Gabriel Sobrinho &lt;gabriel (dot) sobrinho (at) gmail (dot) com&gt;</p>
+<h2>array_mixer( $array_o, $array_i, $recursive=false )</h2>
+<p>This function works very similar to  array_merge_recursive, with this obvious exception: Numeric keys are  treated just like string keys.</p>
+<code>$array_a = array(<br />
+    'one' =&gt; array(
+        'a1', 'a2', 'a3'
+    ),<br />
+    'three' =&gt; array(
+        'i' =&gt; 'A1', 'ii' =&gt; 'A2', 'iii' =&gt; 'A3'
+    ),<br />
+    'four' =&gt; 'one'<br />
+);<br />
+<br />
+$array_b = array(<br />
+    'one' =&gt; array(
+        'b1', 'b2', 'b3'
+    ),<br />
+    'three' =&gt; array(
+        'i' =&gt; 'B1', 'ii' =&gt; 'B2', 'iii' =&gt; array('one', 'two', 'three')
+    ),<br />
+    'four' =&gt; 'two'<br />
+);<br />
+<br />
+print_r(array_mix_recursive($array_a, $array_b));</code> </div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+Previous Topic:&nbsp;&nbsp; <a href="../libraries/zip.html">Zip Encoding Class</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+Next Topic:&nbsp;&nbsp;<a href="compatibility_helper.html">Compatibility Helper</a></p>
+<p><a href="http://gudagi.net/herbigniter/">HerbIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://gudagi.com/">Gudagi</a></p>
+</div>
+
+</body>
+</html>

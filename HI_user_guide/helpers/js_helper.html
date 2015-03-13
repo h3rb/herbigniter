@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array Helper : HerbIgniter User Guide</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<script type="text/javascript" src="../nav/nav.js"></script>
+<script type="text/javascript" src="../nav/prototype.lite.js"></script>
+<script type="text/javascript" src="../nav/moo.fx.js"></script>
+<script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Herb' />
+<meta name='description' content='HerbIgniter User Guide' />
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>HerbIgniter User Guide Version 1.7.2</h1></td>
+<td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://gudagi.net/herbigniter/">HerbIgniter Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+JS Helper
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="gudagi.net/herbigniter/HI_user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>JS Helper</h1>
+
+<p>The JavaScript Helper file contains functions that assist in working with basic javascript.</p>
+
+
+<h2>Loading this Helper</h2>
+
+<p>This helper is loaded using the following code:</p>
+<code>$this->load->helper('js');</code>
+
+<p>The following functions are available:</p>
+
+<h2>js( code )</h2>
+
+<p>Simply wraps some Javascript in a &lt;SCRIPT&gt; tag.</p>
+<p>Example:</p>
+
+<code> $page-&gt;append_head( js ( &quot;var a=5;&quot; ) );
+</code>
+
+
+<h2>add_event( jsid, event_attribute, code )</h2>
+
+<p>Uses Javascript to add events to an object with an existing Javascript event handler.</p>
+<p>Usage example:</p>
+
+<code>$page-&gt;append_head( add_event( &quot;domid&quot;, &quot;onchange&quot;, &quot;javascript:this()&quot; ) );</code>
+<h2>add_event_id( jsid, event_attribute, code )</h2>
+<p>Append an event to an existing Javascript event handler on given object (usually a div with an id).<br />
+</p>
+<p>Usage example:</p>
+<code>$page-&gt;append_head( add_event_id( &quot;domid&quot;, &quot;onchange&quot;, &quot;javascript:this()&quot; )  );</code>
+<h2>alert( message )</h2>
+<p>Triggers a Javascript alert.<br />
+</p>
+<p>Usage example:</p>
+<code>$page-&gt;append_head( alert( &quot;Alert! Alert! All hands to battlestations!&quot; )  );</code>
+<h2>jsredirect( url, delay_in_millis )</h2>
+<p>Javascript redirect with delay.<br />
+</p>
+<p>Usage example:</p>
+<code>$page-&gt;append_body( jsredirect( &quot;http://foofle.com&quot;, 20 )  );</code>
+<h2>add_onload( code )</h2>
+<p>Also a part of the Page class as $this-&gt;page-&gt;add_onload( &quot;somefunction()&quot; ), uses JavaScript to append a function to the <em>onload</em> attribute.<br />
+</p>
+<p>Usage example:</p>
+<code>add_onload( &quot;javascriptfunction()&quot; );</code>
+<h2>js_character_counter( size=&quot;255&quot;, dom_id=&quot;text&quot;, div_id=&quot;counter&quot; )</h2>
+<p>Establishes a character counter in a div with its own id (counter) attached to an input or textarea tag with an id (text)<br />
+</p>
+<p>Usage example:</p>
+<code>$page-&gt;append_body( js_character_counter( 1024, &quot;message&quot;, &quot;msg_counter&quot;) );</code>
+<h2>setup_tinymce( path=here().&quot;/js&quot; )</h2>
+<p>Initializes tinyMCE. Should be called in the &lt;HEAD&gt; section.<br />
+</p>
+<p>Usage example:</p>
+<code>$page-&gt;append_head( setup_tinymce( ) );</code>
+<h2>tinymce( $name = &quot;elm1&quot;, $content=&quot;&quot; )</h2>
+<p>Also a part of the Page class as $this-&gt;page-&gt;add_onload( &quot;somefunction()&quot; ), uses JavaScript to append a function to the <em>onload</em> attribute.<br />
+</p>
+<p>Usage example:</p>
+<code>$page-&gt;append_body( tinymce(&quot;my_text_id&quot;,&quot;some default content&quot; ) );</code>
+<h2>use_zorng( path=here().&quot;/js&quot; )</h2>
+<p>Initializes <a href="http://walterzorn.com/">Walter Zorn</a>'s <a href="http://walterzorn.com/jsgraphics/jsgraphics_e.htm">VectorGraphics</a> library for JavaScript.<br />
+</p>
+<p>Usage example:</p>
+<code>$page-&gt;append_head( use_zorng( ) );</code>
+<h2>wz_start(  ) ... wz_end( ), or wz_draw( jsid, code )</h2>
+<p>Begins a ZornG drawing codeblock. Terminate this block with wz_end();</p>
+<blockquote>
+  <p>Activates these wrappers around the ZornG VG functions:<br />
+    <br />
+    fillRect( $left, $top, $width, $height )<br />
+    drawRect( $left, $top, $width, $height )<br />
+    setColor ( $color )<br />
+    drawText( $content, $x, $y )<br />
+    textRect( $content, $x, $y, $w, $alignment=&quot;left&quot; /* or &quot;right&quot; */ )<br />
+    stroke( $thickness )<br />
+    line( $x, $y, $xx, $yy )<br />
+    jghtm( $html_insert )<br />
+    polyline( $array1, $array2 )<br />
+    polygon( $array1, $array2 )<br />
+    fillPolygon( $array1, $array2 )<br />
+    oval( $x, $y, $xx, $yy )<br />
+    fillOval( $x, $y, $xx, $yy )<br />
+    ellipse( $x, $y, $xx, $yy )<br />
+    fillEllipse( $x, $y, $xx, $yy )<br />
+    arc( $x, $y, $xx, $yy, $sa, $ea )<br />
+    fillArc( $x, $y, $xx, $yy, $sa, $ea )<br />
+    clear( )<br />
+    setFont( $name = &quot;verdana,geneva,sans-serif&quot;, $size = &quot;10px&quot;, $drawstyle = &quot;PLAIN&quot; /* or BOLD, ITALIC, BOLD_ITALIC */ )<br />
+    newCanvas( $name = &quot;myCanvas&quot;,  $zg_height = &quot;100%&quot;,  $zg_width  = &quot;100%&quot;  )</p>
+</blockquote>
+<p>Usage examples:</p>
+<p><code>// Draws while the page is loaded.<br />
+  $page-&gt;append_head( <br />
+  wz_start() . <br />
+  setColor(&quot;#00ff00&quot;) .<br />
+  fillEllipse(100, 200, 100, 180) .<br />
+  setColor(&quot;maroon&quot;) .<br />
+  drawLine(10, 113, 220, 55) .<br />
+  setColor(&quot;#0000ff&quot;) 
+  .<br />
+  fillRect(110, 120, 30, 60) .<br />
+  setColor(&quot;#0000ff&quot;) .<br />
+  drawEllipse(10, 50, 30, 100) .<br />
+  drawRect(400, 10, 100, 50).<br />
+  wz_end() );<br />
+  </code></p>
+<p><code>// You can also wrap it inside a JS function to be called on demand. <br />
+  $page-&gt;append_head( <br />
+  wz_draw( <br />
+  setColor(&quot;#00ff00&quot;) .<br />
+  fillEllipse(100, 200, 100, 180) .<br />
+  setColor(&quot;maroon&quot;) .<br />
+  drawLine(10, 113, 220, 55) .<br />
+  setColor(&quot;#0000ff&quot;) 
+  .<br />
+  fillRect(110, 120, 30, 60) .<br />
+  setColor(&quot;#0000ff&quot;) .<br />
+  drawEllipse(10, 50, 30, 100) .<br />
+  drawRect(400, 10, 100, 50)<br />
+  )  // end wz_draw block<br />
+); // end append_head<br />
+  <br />
+  $page-&gt;append_body( &quot;&lt;a href='#' onclick='javascript:ourfunc()'&gt;&quot; );
+</code></p>
+</div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+Previous Topic:&nbsp;&nbsp; <a href="../libraries/zip.html">Zip Encoding Class</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+Next Topic:&nbsp;&nbsp;<a href="compatibility_helper.html">Compatibility Helper</a></p>
+<p><a href="http://gudagi.net/herbigniter/">HerbIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://gudagi.com/">Gudagi</a></p>
+</div>
+
+</body>
+</html>

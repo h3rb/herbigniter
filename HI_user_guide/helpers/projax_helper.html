@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array Helper : HerbIgniter User Guide</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<script type="text/javascript" src="../nav/nav.js"></script>
+<script type="text/javascript" src="../nav/prototype.lite.js"></script>
+<script type="text/javascript" src="../nav/moo.fx.js"></script>
+<script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Herb' />
+<meta name='description' content='HerbIgniter User Guide' />
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>HerbIgniter User Guide Version 1.7.2</h1></td>
+<td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://gudagi.net/herbigniter/">HerbIgniter Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+ProJAX Helper
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="gudagi.net/herbigniter/HI_user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>ProJAX Helper</h1>
+
+<p>The ProJAX Helper file contains functions that wrap popular javascript libraries <em>Prototype</em> and <em>Scriptaculous</em>. </p>
+<p>Projax stands for Prototype and Ajax.Projax is a set of Open Source PHP Classes which help you build more interactive   Web Application / websites with minimal effort. Projax help you build better applications by providing easy to   use API which siplifies tasks involving Ajax , Effects , DOM etc. At its core Projax is a RoR javascript helpers port for PHP.  For Ajax and DOM Projax uses Prototype on client side , and for Effects like drag and drop etc it uses Script.aculo.us. </p>
+<p>Demos: <a href="http://www.ngcoders.com/projax/" target="_blank">http://www.ngcoders.com/projax/</a></p>
+
+
+<h2>Loading this Helper</h2>
+
+<p>This helper is loaded using the following code:</p>
+<code>$this->load->helper('projax');<br />
+$this-&gt;page-&gt;append_head( 
+&quot;&lt;script src=&quot;http://www.ngcoders.com/projax/js/prototype.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;&lt;script src=&quot;http://www.ngcoders.com/projax/js/scriptaculous.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;&quot; ); <br />
+// or call init_jquery() from ajax_helper</code>
+
+<div id="content2">
+  <h2>Who is Projax for ?</h2>
+  <p>Projax is for people who wish to build Rich Internet  Applications(RIA) and want the client side scripting and effects also  to be programmable though server side PHP. This is probably not really necessary since the Form class already does this, but it gives you an idea of how this object works.</p>
+  <p>&nbsp;</p>
+</div>
+<ul>
+  <li>Create a new instance of Projax though which all the functionality will be accessed.</li>
+  </ul>
+<p><code>$projax = new Projax(); </code></p>
+<ul>
+  <li>Once you have intialized the class lets show the input box which requires auto-completion.</li>
+</ul>
+<p><code>Please enter your year of birth :<br />
+  &lt;?=$projax-&gt;text_field_with_auto_complete('dob',null,array('url'=&gt;'index.php?task=ajax'));?&gt; </code></p>
+<ul>
+  <li>  When you enter anything into this it will call the url <em><strong>index.php?task=ajax</strong></em> , It will pass the current value of dob as $_POST['dob']. The called page should return a list of matching values.  	</li>
+</ul>
+<p><code>for($i=1900;$i&lt;2006;$i++)$ret_val.=(strstr($i,$_POST['dob']))?'&lt;li&gt;'.$i.'&lt;/li&gt;':'';<br />
+  echo '&lt;ul&gt;'.$ret_val.'&lt;/ul&gt;'; </code>
+  
+</p>
+<div id="content3">
+  <div id="content4">
+    <h1>JavaScript Class</h1>
+    <p>Provides functionality for working with JavaScript.</p>
+    <h2>Initializing the Class</h2>
+    <p>Initialize this class like any other class.  </p>
+    <p><code>$javascript= new JavaScript(); </code></p>
+    <p>Then use any of the meber functions given below. </p>
+    <h2>button_to_function($name,$function=null)</h2>
+    <p> Returns a link that’ll trigger a JavaScript function using the onclick handler.</p>
+    <p> Example:</p>
+    <p><code> button_to_function('Greetigs', 'alert(&quot;Hello world!&quot;)' ); </code></p>
+    <h2>escape($javascript)</h2>
+    <p>Escape carrier returns and single and double quotes for JavaScript segments.</p>
+    <h2>tag($content)</h2>
+    <p>Returns a JavaScript tag with the content inside.</p>
+    <p>Example:</p>
+    <p><code> tag('alert(&quot;All is good&quot;)'); </code></p>
+    <h2>link_to_function($name,$function,$html_options=null)</h2>
+    <p>Returns a link that’ll trigger a JavaScript function using the onclick handler and return false after the fact.</p>
+    <p>Example:</p>
+    <p><code> link_to_function(&quot;Greeting&quot;,&quot;alert('Hello world!')&quot;); </code></p>
+  </div>
+  <h2>&nbsp;</h2>
+</div>
+<div id="content16">
+  <div id="content17">
+    <h1>Prototype Class</h1>
+    <p>Provides a set of helpers for calling Prototype JavaScript  functions, including functionality to call remote methods using Ajax.  This means that you can call actions in your page without reloading the  page, but still update certain parts of it using injections into the  DOM. The common use case is having a form that adds a new element to a  list without reloading the page.</p>
+    <h2>Initializing the Class</h2>
+    <p>Initialize this class like any other class.  </p>
+    <p><code>$prototype= new Prototype();  </code></p>
+    <p>Then use any of the member functions given below. </p>
+    <h2>evaluate_remote_response()</h2>
+    <p> Returns ‘eval(request.responseText)’ which is the JavaScript function  that form_remote_tag can call in ['complete'] to evaluate a multiple  update return document using update_element_function calls. </p>
+    <h2>form_remote_tag($options)</h2>
+    <p>Returns a form tag that will submit using XMLHttpRequest in the  background instead of the regular reloading POST arrangement. Even  though it’s using JavaScript to serialize the form elements, the form  submission will work just like a regular submission as viewed by the  receiving side (all elements available in params). The options for  specifying the target with ['url'] and defining callbacks is the same  as link_to_remote.</p>
+    <p>A &quot;fall-through&quot; target for browsers that doesn’t do JavaScript can  be specified with the ['action']/['method'] options on ['html'].</p>
+    <p>Example:  </p>
+    <p><code>form_remote_tag( array('url'=&gt;$some_url) ); </code></p>
+    <h2>link_to_remote($name,$function,$html_options=null)</h2>
+    <p>Returns a link to a remote action defined by options['url'] that’s  called in the background using XMLHttpRequest. The result of that  request can then be inserted into a DOM object whose id can be  specified with options['update']. Usually, the result would be a  partial prepared by the controller with either render_partial or  render_partial_collection.</p>
+    <p>Example :  link_to_remote(&quot;Delete this post&quot;,array('url'=&gt;$some_url.&quot;task=delete&amp;id=&quot;.$some_id.&quot;'&quot;)); </p>
+    <p>You can also specify a hash for options['update'] to allow for easy  redirection of output to an other DOM element if a server-side error  occurs:</p>
+    <p> Example:  link_to_remote(&quot;Delete this  post&quot;,array('url'=&gt;$some_url.&quot;task=delete&amp;id=&quot;.$some_id.&quot;'&quot;,'update'=array('success'=&gt;'posts','failure'=&gt;'error')); </p>
+    <p> Optionally, you can use the options[:position] parameter to influence  how the target DOM element is updated. It must be one of ['before'],  ['top'], ['bottom'], or ['after']. </p>
+    <p>By default, these remote requests are processed asynchronous  during which various JavaScript callbacks can be triggered (for  progress indicators and the likes). All callbacks get access to the  request object, which holds the underlying XMLHttpRequest. </p>
+    <p> To access the server response, use request.responseText, to find out the HTTP status, use request.status. </p>
+    <p> Example:</p>
+    <p><code> link_to_remote(&quot;Delete this  post&quot;,array('url'=&gt;$some_url.&quot;task=delete&amp;id=&quot;.$some_id.&quot;'&quot; ,  'complete'=&gt;'undoRequestCompleted(request)')); </code></p>
+    <p> <em>The callbacks that may be specified are</em> (in order): </p>
+    <ul>
+      <li><strong>loading</strong>: 
+        Called when the remote document is being loaded with data by the browser.</li>
+      <li><strong>loaded</strong>: 
+        Called when the browser has finished loading the remote document.</li>
+      <li><strong>interactive</strong>:         Called when the user can interact with the remote document, even though it has not finished loading.</li>
+      <li><strong>success</strong>: 
+        Called when the XMLHttpRequest is completed, and the HTTP status code is in the 2XX range.</li>
+      <li><strong>failure</strong>: 
+        Called when the XMLHttpRequest is completed, and the HTTP status code is not in the 2XX range.</li>
+      <li><strong>complete</strong>: 
+        Called when the XMLHttpRequest is complete (fires after success/failure if they are present).</li>
+      </ul>
+    <p>You can further refine<strong> ['success']</strong> and <strong>['failure'] </strong>by adding additional callbacks for specific status codes. If you for some reason or another need synchronous processing (that’ll  block the browser while the request is happening), you can specify <strong>options['type'] = 'synchronous'</strong>. </p>
+    <p>You can customize further browser side call logic by passing in  JavaScript code snippets via some optional parameters. In their order  of use these are: </p>
+    <ul>
+      <li><strong>confirm</strong>: 
+        Adds confirmation dialog.</li>
+      <li><strong>condition</strong>:         Perform remote request conditionally  by this expression. Use this to describe browser-side conditions when  request should not be initiated.</li>
+      <li><strong>before</strong>: 
+        Called before request is initiated.</li>
+      <li><strong>after</strong>: 
+        Called immediately after request was initiated and before :loading.</li>
+      <li><strong>submit: </strong>        Specifies the DOM element ID that’s  used as the parent of the form elements. By default this is the current  form, but it could just as well be the ID of a table row or any other  DOM element.</li>
+    </ul>
+    <h2>observe_field($field_id,$options =null)</h2>
+    <p>Observes the field with the DOM ID specified by field_id and makes an Ajax call when its contents have changed.</p>
+    <p> <em>Required options are either of: </em></p>
+    <ul>
+      <li><strong>url</strong>: 
+        url_for-style options for the action to call when the field has changed. </li>
+      <li><strong>function</strong>:         Instead of making a remote call to a URL, you can specify a function to be called instead. </li>
+      </ul>
+    <em>Additional options are:</em>
+<ul>
+  <li><strong>frequency</strong>: 
+    The frequency (in seconds) at which  changes to this field will be detected. Not setting this option at all  or to a value equal to or less than zero will use event based  observation instead of time based observation.</li>
+  <li><strong>update</strong>: 
+    Specifies the DOM ID of the element whose innerHTML should be updated with the XMLHttpRequest response text.</li>
+  <li><strong>with</strong>: 
+    A JavaScript expression specifying the  parameters for the XMLHttpRequest. This defaults to ‘value’, which in  the evaluated context refers to the new field value. If you specify a  string without a &quot;=&quot;, it’ll be extended to mean the form key that the  value should be assigned to. So :with =&gt; &quot;term&quot; gives  &quot;’term’=value&quot;. If a &quot;=&quot; is present, no extension will happen.</li>
+  <li><strong>on</strong>: 
+    Specifies which event handler to observe.  By default, it’s set to &quot;changed&quot; for text fields and areas and &quot;click&quot;  for radio buttons and checkboxes. With this, you can specify it instead  to be &quot;blur&quot; or &quot;focus&quot; or any other event.</li>
+</ul>
+    Additionally, you may specify any of the options documented in <em>link_to_remote()</em>.
+    <h2>observe_form($form,$options=null)</h2>
+    <p> Like observe_field, but operates on an entire form identified by the  DOM ID form_id. options are the same as observe_field, except the  default value of the :with option evaluates to the serialized (request  string) value of the form. </p>
+    <h2>periodically_call_remote($options=null)</h2>
+    <p>Periodically calls the specified url (<strong>options['url']</strong>) every  <strong>options['frequency']</strong> seconds (default is 10). Usually used to update a  specified div (<strong>options['update']</strong>) with the results of the remote call.  The options for specifying the target with :url and defining callbacks  is the same as <em>link_to_remote</em>().</p>
+    <h2>remote_function($options)</h2>
+    <p> Returns the JavaScript needed for a remote function. Takes the same arguments as <em><strong>link_to_remote</strong></em>(). </p>
+    <p> Example:  <br />
+      <br />
+      <code>&lt;select id=&quot;options&quot; onchange=&quot;&lt;?= remote_function(array('update' =&gt; 'options', 'url' =&gt; $some_url) ? &gt;&quot;&gt; <br />
+      &lt;option value=&quot;0&quot;&gt;Hello&lt;/option&gt;<br />
+      &lt;option value=&quot;1&quot;&gt;World&lt;/option&gt;<br />
+      &lt;/select&gt;</code></p>
+    <h2>submit_to_remote($name,$value,$options=null)</h2>
+    <p> Returns a button input tag that will submit form using <em>XMLHttpRequest()</em> in the background instead of regular reloading POST arrangement.  options argument is the same as in form_remote_tag. </p>
+    <p>These functions are from JavaScriptGenerator class which was merged into prototype.</p>
+    <h2>dump($javascript)</h2>
+    <p>Writes raw JavaScript to the page.</p>
+    <h2>ID($id,$extend=null)</h2>
+    <p>Returns a element reference by finding it through id in the DOM. This element can then be used for further method calls.</p>
+    <p>Examples:</p>
+    <p> <code>ID('blank_slate'); // =&gt; Will return $('blank_slate');<br />
+      ID('blank_slate','show'); // =&gt; $('blank_slate').show();</code></p>
+    <h2>alert($message)</h2>
+    <p>Displays an alert dialog with the given message.</p>
+    <h2>assign($variable,$value)</h2>
+    <p>Assigns the JavaScript variable the given value.</p>
+    <h2>call($function,$args = null)</h2>
+    <p>Calls the JavaScript function, optionally with the given arguments.</p>
+    <h2>delay($seconds=1,$script='')</h2>
+    <p>Executes the content of the block after a delay of seconds.</p>
+    <h2>hide($ids)</h2>
+    <p>Hides the visible DOM elements with the given ids.</p>
+    <h2>insert_html($position,$id,$options_for_render=null)</h2>
+    <p>Inserts HTML at the specified position relative to the DOM element identified by the given id.</p>
+    <p>position maybe one of: </p>
+    <ul>
+      <li><strong>top</strong>: 
+        HTML is inserted inside the element, before the element’s existing content.</li>
+      <li><strong>bottom</strong>: 
+        HTML is inserted inside the element, after the element’s existing content.</li>
+      <li><strong>before</strong>: 
+        HTML is inserted immediately preceeding the element.</li>
+      <li><strong>after</strong>: 
+        HTML is inserted immediately following the element.</li>
+      </ul>
+    <p>Example:    </p>
+    <p><code>//Insert the rendered 'navigation' partial just before the DOM<br />
+      //element with ID 'content'.<br />
+      insert_html('before','content',array('partial'=&gt;'navigation');
+    </code></p>
+    <h2>redirect_to($location)</h2>
+    <p>Redirects the browser to the given location.</p>
+    <h2>remove($ids)</h2>
+    <p>Removes the DOM elements with the given ids from the page.</p>
+    <h2>replace($id,$options_for_render=null)</h2>
+    <p>Replaces the &quot;outer HTML&quot; (i.e., the entire element, not just its contents) of the DOM element with the given id.</p>
+    <h2>replace_html($id,$options_for_render=null)</h2>
+    <p>Replaces the inner HTML of the DOM element with the given id.</p>
+    <h2>select($pattern)</h2>
+    <p>Returns a collection reference by finding it through a CSS pattern  in the DOM. This collection can then be used for further method calls.</p>
+    <p>Examples:</p>
+    <p><code> select('p') // =&gt; $$('p'); </code></p>
+    <h2>show($ids)</h2>
+    <p>Shows hidden DOM elements with the given ids.</p>
+    <h2>toggle($ids)</h2>
+    <p>Toggles the visibility of the DOM elements with the given ids.</p>
+    <p>&nbsp;</p>
+  </div>
+  <div id="content5">
+    <h1>Scriptaculous Class</h1>
+    <p>Provides a set of helpers for calling Scriptaculous JavaScript  functions, including those which create Ajax controls and visual  effects.</p>
+    <p>To be able to use these helpers, you must include the Prototype  JavaScript framework and the Scriptaculous JavaScript library in your  pages.</p>
+    <p>The Scriptaculous helpers’ behavior can be tweaked with various options. See the documentation at <a href="http://script.aculo.us/">script.aculo.us</a> for more information on using these helpers in your application. </p>
+    <h2>Initializing the Class</h2>
+    <p>Initialize this class like any other class.  </p>
+    <p><code>$scriptalaculous= new Scriptalaculous();</code></p>
+    <p> Then use any of the member functions given below. </p>
+    <h2>dragable_element($element_id,$options=null)</h2>
+    <p> Makes the element with the DOM ID specified by element_id draggable.</p>
+    <p> Example:  </p>
+    <p><code>draggable_element('my_image',array('revert'=?'true')); </code></p>
+    <h2>drop_receiving_element($element_id,$options=null)</h2>
+    <p> Makes the element with the DOM ID specified by element_id receive  dropped draggable elements (created by draggable_element). and make an  AJAX call By default, the action called gets the DOM ID of the element  as parameter.</p>
+    <p> Example:</p>
+    <p><code> drop_receiving_element('my_cart',array('url'=&gt;$update_url)); </code></p>
+    <h2>sortable_element($element_id,$options=null)</h2>
+    <p> Makes the element with the DOM ID specified by element_id sortable by  drag-and-drop and make an Ajax call whenever the sort order has  changed. By default, the action called gets the serialized sortable  element as parameters. </p>
+    <p> Example:</p>
+    <p><code> sortable_element('my_list',array('url'=&gt;$order_url)); </code></p>
+    <h2>visual_effect($name,$element_id=false,$js_options=null)</h2>
+    <p> Returns a JavaScript snippet to be used on the Ajax callbacks for starting visual effects.</p>
+    <p> Example:</p>
+    <p><code> sortable_element('my_list',array('url'=&gt;$order_url)); </code></p>
+    <p>These functions are from JavaScriptMacro class which was merged into Scriptalaculous.</p>
+    <h2>auto_complete_field($field_id,$options=null)</h2>
+    <p> Adds AJAX autocomplete functionality to the text input field with the DOM ID specified by field_id. </p>
+    <p>This function expects that the called action returns a HTML  &lt;ul&gt; list, or nothing if no entries should be displayed for  autocompletion. </p>
+    <p>You‘ll probably want to turn the browser’s built-in  autocompletion off, so be sure to include a autocomplete=&quot;off&quot;  attribute with your text input field. </p>
+    <p>The autocompleter object is assigned to a Javascript variable  named field_id_auto_completer. This object is useful if you for example  want to trigger the auto-complete suggestions through other means than  user input (for that specific case, call the activate method on that  object). </p>
+    <p> <em>Required options are: </em></p>
+    <ul>
+      <li><strong>url</strong>: 
+        URL to call for autocompletion results in url_for format.</li>
+    </ul>
+    <em>Addtional options are:</em>
+<ul>
+  <li><strong>update</strong>: 
+      Specifies the DOM ID of the element  whose innerHTML should be updated with the autocomplete entries  returned by the AJAX request. Defaults to field_id + ‘_auto_complete‘</li>
+    <li><strong>with</strong>: 
+      A JavaScript expression specifying the parameters for the XMLHttpRequest. This defaults to ‘fieldname=value’.</li>
+    <li><strong>frequency</strong>: 
+      Determines the time to wait after the last keystroke for the AJAX request to be initiated.</li>
+  <li><strong>indicator</strong>: 
+    Specifies the DOM ID of an element which will be displayed while autocomplete is running.</li>
+  <li><strong>tokens</strong>: 
+    A string or an array of strings  containing separator tokens for tokenized incremental autocompletion.  Example: :tokens =&gt; ’,’ would allow multiple autocompletion entries,  separated by commas.</li>
+  <li><strong>min_chars</strong>: 
+    The minimum number of characters that should be in the input field before an Ajax call is made to the server.</li>
+  <li><strong>on_hide</strong>: 
+    A Javascript expression that is called  when the autocompletion div is hidden. The expression should take two  variables: element and update. Element is a DOM element for the field,  update is a DOM element for the div from which the innerHTML is  replaced.</li>
+  <li><strong>on_show</strong>: 
+    Like on_hide, only now the expression is called then the div is shown.</li>
+  <li><strong>after_update_element</strong>: 
+    A Javascript expression  that is called when the user has selected one of the proposed values.  The expression should take two variables: element and value. Element is  a DOM element for the field, value is the value selected by the user.</li>
+  <li><strong>select</strong>: 
+    Pick the class of the element from  which the value for insertion should be extracted. If this is not  specified, the entire element is used.</li>
+</ul>
+  <h2>in_place_editor($field_id,$options=null)</h2>
+  <p>Makes an HTML element specified by the DOM ID field_id become an in-place editor of a property.</p>
+  <p>A form is automatically created and displayed when the user clicks the element.</p>
+  <p> The form is serialized and sent to the server using an AJAX call, the  action on the server should process the value and return the updated  value in the body of the reponse. The element will automatically be  updated with the changed value (as returned from the server). </p>
+  <p> <em>Required options are: </em></p>
+  <ul>
+    <li><strong>url</strong>: 
+      Specifies the url where the updated value should be sent after the user presses &quot;ok&quot;.</li>
+  </ul>
+    <em>Addtional options are:</em>
+<ul>
+  <li><strong>rows</strong>: 
+      Number of rows (more than 1 will use a TEXTAREA)</li>
+    <li><strong>cols</strong>: 
+      Number of characters the text input should span (works for both INPUT and TEXTAREA)</li>
+    <li><strong>size</strong>: 
+      Synonym for :cols when using a single line text input.</li>
+  <li><strong>cancel_text</strong>: 
+    The text on the cancel link. (default: &quot;cancel&quot;)</li>
+  <li><strong>save_text</strong>: 
+    The text on the save link. (default: &quot;ok&quot;)</li>
+  <li><strong>loading_text</strong>: 
+    The text to display when submitting to the server (default: &quot;Saving…&quot;)</li>
+  <li><strong>external_control</strong>: 
+    The id of an external control used to enter edit mode.</li>
+  <li><strong>load_text_url</strong>: 
+    URL where initial value of editor (content) is retrieved.</li>
+  <li><strong>options</strong>: 
+    Pass through options to the AJAX call (see prototype’s Ajax.Updater)</li>
+  <li><strong>with</strong>: 
+    JavaScript snippet that should return what is to be sent in the AJAX call, form is an implicit parameter</li>
+  <li><strong>script</strong>: 
+    Instructs the in-place editor to evaluate the remote JavaScript response (default: false)</li>
+</ul>
+  <h2>in_place_editor_field(object,  $tag_options = null, $options = null)</h2>
+  <p>Renders the value of the specified object and method with in-place editing capabilities.</p>
+  <h2>text_field_with_auto_complete(object, $tag_options = null,       $options = null)</h2>
+  <p>Wrapper for text_field with added AJAX autocompletion functionality.</p>
+  </div>
+  <h2>&nbsp;</h2></div>
+See the actual Projax documentation located <a href="http://www.ngcoders.com/projax/" target="_blank">here</a>. </div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+Previous Topic:&nbsp;&nbsp; <a href="../libraries/zip.html">Zip Encoding Class</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+Next Topic:&nbsp;&nbsp;<a href="compatibility_helper.html">Compatibility Helper</a></p>
+<p><a href="http://gudagi.net/herbigniter/">HerbIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://gudagi.com/">Gudagi</a></p>
+</div>
+
+</body>
+</html>

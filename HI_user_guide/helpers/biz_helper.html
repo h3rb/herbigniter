@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Array Helper : HerbIgniter User Guide</title>
+
+<style type='text/css' media='all'>@import url('../userguide.css');</style>
+<link rel='stylesheet' type='text/css' media='all' href='../userguide.css' />
+
+<script type="text/javascript" src="../nav/nav.js"></script>
+<script type="text/javascript" src="../nav/prototype.lite.js"></script>
+<script type="text/javascript" src="../nav/moo.fx.js"></script>
+<script type="text/javascript" src="../nav/user_guide_menu.js"></script>
+
+<meta http-equiv='expires' content='-1' />
+<meta http-equiv= 'pragma' content='no-cache' />
+<meta name='robots' content='all' />
+<meta name='author' content='Herb' />
+<meta name='description' content='HerbIgniter User Guide' />
+
+</head>
+<body>
+
+<!-- START NAVIGATION -->
+<div id="nav"><div id="nav_inner"><script type="text/javascript">create_menu('../');</script></div></div>
+<div id="nav2"><a name="top"></a><a href="javascript:void(0);" onclick="myHeight.toggle();"><img src="../images/nav_toggle_darker.jpg" width="154" height="43" border="0" title="Toggle Table of Contents" alt="Toggle Table of Contents" /></a></div>
+<div id="masthead">
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td><h1>HerbIgniter User Guide Version 1.7.2</h1></td>
+<td id="breadcrumb_right"><a href="../toc.html">Table of Contents Page</a></td>
+</tr>
+</table>
+</div>
+<!-- END NAVIGATION -->
+
+
+<!-- START BREADCRUMB -->
+<table cellpadding="0" cellspacing="0" border="0" style="width:100%">
+<tr>
+<td id="breadcrumb">
+<a href="http://gudagi.net/herbigniter/">HerbIgniter Home</a> &nbsp;&#8250;&nbsp;
+<a href="../index.html">User Guide Home</a> &nbsp;&#8250;&nbsp;
+Chart Helper
+</td>
+<td id="searchbox"><form method="get" action="http://www.google.com/search"><input type="hidden" name="as_sitesearch" id="as_sitesearch" value="gudagi.net/herbigniter/HI_user_guide/" />Search User Guide&nbsp; <input type="text" class="input" style="width:200px;" name="q" id="q" size="31" maxlength="255" value="" />&nbsp;<input type="submit" class="submit" name="sa" value="Go" /></form></td>
+</tr>
+</table>
+<!-- END BREADCRUMB -->
+
+<br clear="all" />
+
+
+<!-- START CONTENT -->
+<div id="content">
+
+
+<h1>&quot;Biz&quot; Helper</h1>
+
+<p>The Biz Helper file contains functions that assist in working with CyberSource's <a href="http://www.authorize.net">Authorize.net</a> and <a href="http://www.paypal.com/">PayPal</a>. For currency exchange functions, see the  <a href="country_helper.html">Country Helper</a>.</p>
+<p>The function <em>authorize_net</em>() is the only function required for that method.</p>
+<p>We do not fully document the PayPal API, we merely have provided its functionality wrapped into HerbIgniter. To understand how this works, visit PayPal.</p>
+
+
+<h2>Loading this Helper</h2>
+
+<p>This helper is loaded using the following code:</p>
+<code>$this->load->helper('biz');</code>
+
+<p>The following functions are available:</p>
+
+<h2> authorize_net(card_num, exp_date, invoice_num, description,<br />
+amount, cust_id, first_name, last_name, company, address, city, state, zip, country, phone, fax, email, <br />
+ship_to_first_name, ship_to_last_name, ship_to_company, ship_to_address,
+  ship_to_city, ship_to_state, ship_to_zip, ship_to_country,
+  <br />
+  tax, duty, freight, tax_exempt, po_num)</h2>
+<p>Makes an authorization request for a sale to Authorize.net. This is the final step in the process before returning a success or failure notice that is contained inside an Authorize.net-specific array. You should visit Authorize.net's developer's section </p>
+<p>The array that it returns contains the following elements:</p>
+<ul>
+  <li> <strong>'Response_Code'</strong> =&gt; $Response_Code</li>
+  <li>    <strong>'Response_Subcode'</strong> =&gt; $Response_Subcode</li>
+  <li>    <strong>'Response_Reason_Code'</strong> =&gt; $Response_Reason_Code</li>
+  <li>    <strong>'Response_Reason_Text'</strong> =&gt; $Response_Reason_Text</li>
+  <li>    <strong>'Approval_Code'</strong> =&gt; $Approval_Code</li>
+  <li>    <strong>'AVS_Result_Code'</strong> =&gt; $AVS_Result_Code</li>
+  <li>    <strong>'Transaction_ID'</strong> =&gt; $Transaction_ID</li>
+  <li>    <strong>'Invoice_Number'</strong> =&gt; $Invoice_Number</li>
+  <li>    <strong>'Description'</strong> =&gt; $Description</li>
+  <li>    <strong>'Amount'</strong> =&gt; $Amount</li>
+  <li> <strong>'Method'</strong> =&gt; $Method</li>
+  <li>    <strong>'Transaction_Type'</strong> =&gt; $Transaction_Type</li>
+  <li>    <strong>'MD5_Hash'</strong> =&gt; $MD5_Hash</li>
+  <li>    <strong>'Card_Code_Response'</strong> =&gt; $Card_Code_Response</li>
+</ul>
+<p> Example:</p>
+<p class="tinycode"> // Prepare the operation with Authorize.net, or auto-approve freebie purchases<br />
+  <br />
+$x_card_num 	= preg_replace('/([^0-9]+)/','',$order['AccountNumber']);<br />
+$x_exp_date 	= $order['Month'].'/'.$order['Year'];<br />
+<br />
+$x_description 	= 'Order from ' . $this-&gt;config-&gt;item('site_name') .': '. $order_id;<br />
+$x_amount 	= $order['total'];<br />
+$x_first_name 	= $order['First_Name'];<br />
+$x_last_name 	= $order['Last_Name'];<br />
+$x_address 	= $order['Billing_Address'];<br />
+$x_city 	= $order['City'];<br />
+$x_state 	= $order['State'];<br />
+$x_zip 		= $order['ZIP'];<br />
+<br />
+$x_invoice_num 	= $order_id . '/' . $order['id'];<br />
+  $x_cust_id 	= $this-&gt;customer_id;<br />
+  <br />
+  $x_tax_exempt 	= '';<br />
+  $x_po_num 	= '';<br />
+  $x_company 	= '';<br />
+  $x_country 	= $order['Country'];<br />
+  $x_phone 	= $order['Phone'];<br />
+  $x_fax 		= $order['Fax'];<br />
+  $x_email 	= $order['Email_Address'];<br />
+  <br />
+  $x_ship_to_first_name    = '';<br />
+  $x_ship_to_last_name     = '';<br />
+  $x_ship_to_company	 = '';<br />
+  $x_ship_to_address	 = '';<br />
+  $x_ship_to_city		 = '';<br />
+  $x_ship_to_state	 = '';<br />
+  $x_ship_to_zip		 = '';<br />
+  $x_ship_to_country	 = '';<br />
+  <br />
+  $x_tax 		= $order['tax'];<br />
+  $x_duty 	= 0;<br />
+  $x_freight 	= $order['shipping'];<br />
+  <br />
+  if ($order['total'] == 0) { // Process Freebies<br />
+  $authorize_response=array();<br />
+  $authorize_response['Response_Code'] 		= 'Approved';<br />
+  $authorize_response['Response_Subcode'] 	= '';<br />
+  $authorize_response['Response_Reason_Code'] 	= '';<br />
+  $authorize_response['Response_Reason_Text'] 	= '';<br />
+  $authorize_response['Approval_Code'] 		= '';<br />
+  $authorize_response['AVS_Result_Code'] 		= '';<br />
+  $authorize_response['Transaction_ID'] 		= '';<br />
+  $authorize_response['Invoice_Number'] 		= '';<br />
+  $authorize_response['Description'] 		= 'Free';<br />
+  $authorize_response['Amount'] 			= 0;<br />
+  $authorize_response['Method'] 			= '';<br />
+  $authorize_response['Transaction_Type'] 	= 'No Total';<br />
+  $authorize_response['MD5_Hash'] 		= '';<br />
+  $authorize_response['Card_Code_Response'] 	= '';<br />
+  } else {<br />
+  //////////////////<br />
+  $authorize_response = authorize_net($x_card_num, $x_exp_date, $x_invoice_num, $x_description, $x_amount, $x_cust_id, $x_first_name, $x_last_name, $x_company, $x_address, $x_city, $x_state, $x_zip, $x_country, $x_phone, $x_fax, $x_email, $x_ship_to_first_name, $x_ship_to_last_name, $x_ship_to_company, $x_ship_to_address, $x_ship_to_city, $x_ship_to_state, $x_ship_to_zip, $x_ship_to_country, $x_tax, $x_duty, $x_freight, $x_tax_exempt, $x_po_num);<br />
+  //////////////////<br />
+  }</p>
+<h2>PayPal_Button( payer_email, item_name, amount, currency,<br />
+alt='default', image='default', <br />
+type_titles=NULL, types=NULL, default=NULL, options=NULL, extra='&lt;br&gt;' )</h2>
+<p>A function which generates the entire range of PayPal buttons, including ones with custom images and item options like sizes, colors, etc. You can have multiple <em>types</em> and multiple <em>options</em>. The <em>extra</em> parameter is the HTML between the &lt;SELECT&gt; tags.</p>
+<code>// Simple PayPal Button &quot;buy it now&quot;<br />
+$page-&gt;append_body( PayPal_Button( &quot;my@email.com&quot;, &quot;Blue Prada Boots&quot;, 340.0, &quot;USD&quot; );<br />
+<br />
+// PayPal Button with Color and Size options<br /> 
+$page-&gt;append_body( <br />
+PayPal_Button( &quot;my@email.com&quot;, &quot;Prada Boots&quot;, 340.0, &quot;USD&quot;, <br />
+array( &quot;Colors:&quot;, &quot;Sizes:&quot; ), <br />
+array( &quot;color&quot;, &quot;size&quot; ), <br />
+array( array( &quot;Blue&quot;=&gt;5, &quot;Red&quot;=&gt;6, &quot;Turquoise&quot;=&gt;7 ), array( &quot;Small&quot;=&gt;&quot;S&quot;, &quot;Medium&quot;=&gt;&quot;M&quot; ) ),<br />
+ array( &quot;5&quot;, &quot;M&quot; ), '&lt;!--none--&gt;' )<br />
+)
+;</code>
+<h2>DoMassPayRequest( paypal_credentials, emailSubject, emailAddress, currency, payees, environment='beta-sandbox', ignore=false )</h2>
+<p>This function implements PayPal's MassPay API to request multiple payouts from a single PayPal account. According to PayPal, this is the preferred way of paying people (&quot;pay your payroll!&quot;). You must set the environment variable appropriate to the current environment you are operating in ('beta-sandbox', 'sandbox' or 'live'). Like all of these PayPal API functions here in the Biz Helper, if you set the <em>ignore</em> parameter to true it will return a positive (true) on &quot;SUCCESS&quot; or &quot;SUCCESSWITHWARNING&quot; response codes. If you are doing multiple currencies, you will need to convert it all to the same currency using the <a href="country_helper.html">Country Helper</a>.</p>
+<code>// Assign some PayPal credentials:<br />
+<br />
+$credentials['username'] = &quot;my@paypal.com&quot;;<br />
+$credentials['password'] = &quot;abcdefg&quot;;<br />
+$credentials['signature'] = &quot;signature&quot;;<br />
+<br />
+// In this example, we only have two recipients.
+<br />
+$payees = array(<br />
+array( 'email'=&gt;'john@doe.com', 'amount'=&gt;'45.00', 'id'=&gt;'Unique Paycheck Number', 'note'=&gt; 'Here is your pay for September 2009' ),<br />
+array( 'email'=&gt;'mary@smith.com', 'amount'=&gt;'67.00', 'id'=&gt;'Another Unique PayCheck Number', 'note'=&gt;'Mary, thanks for the fish tank!' )<br />
+);<br />
+<br />
+$response = DoMassPayRequest( $credentials, &quot;You have been paid via MassPay!&quot;, &quot;referenceme@someemail.com&quot;, &quot;USD&quot;, $payees, 'beta-sandbox' );
+<br />
+if(&quot;SUCCESS&quot; == strtoupper($response[&quot;ACK&quot;]) || &quot;SUCCESSWITHWARNING&quot; == strtoupper($response[&quot;ACK&quot;])) return true;<br />
+return false;<br />
+</code>
+<h2> DoAuthorize( paypal_credentials, transactionID, amount, currency, environment='beta-sandbox', ignore=false )</h2>
+<p>This function implements the Authorization step of the PayPal API. You must set the environment variable appropriate to the current environment you are operating in ('beta-sandbox', 'sandbox' or 'live'). Like all of these PayPal API functions here in the Biz Helper, if you set the <em>ignore</em> parameter to true it will return a positive (true) on &quot;SUCCESS&quot; or &quot;SUCCESSWITHWARNING&quot; response codes. This is a request or 'sale' which is made to the PayPal account you are trying to collect money from.</p>
+<code>// Assign some PayPal credentials:<br />
+<br />
+$credentials['username'] = &quot;my@paypal.com&quot;;<br />
+$credentials['password'] = &quot;abcdefg&quot;;<br />
+$credentials['signature'] = &quot;signature&quot;;<br />
+<br />
+// The response contains the new authorization id.<br />
+<br />
+$response = DoAuthorize( $credentials, &quot;2314&quot;, &quot;22.42&quot;, &quot;USD&quot;,  'beta-sandbox' ); </code>
+<h2> DoReauthorization( paypal_credentials, auth_id, amount, currency, environment='beta-sandbox', ignore=false )</h2>
+<p> Reauthorizes a previously authorized transaction. You must set the environment variable appropriate to the current environment you are operating in ('beta-sandbox', 'sandbox' or 'live'). Like all of these PayPal API functions here in the Biz Helper, if you set the <em>ignore</em> parameter to true it will return a positive (true) on &quot;SUCCESS&quot; or &quot;SUCCESSWITHWARNING&quot; response codes. If you are doing multiple currencies, you will need to convert it all to the same currency using the <a href="country_helper.html">Country Helper</a>, which is provided as a parameter.</p>
+<code>// Assign some PayPal credentials:<br />
+<br />
+$credentials['username'] = &quot;my@paypal.com&quot;;<br />
+$credentials['password'] = &quot;abcdefg&quot;;<br />
+$credentials['signature'] = &quot;signature&quot;;<br />
+<br />
+// In this example, we only have two recipients. <br />
+<br />
+$response = DoReauthorization( $credentials, $auth_id, &quot;22.42&quot;, &quot;USD&quot;,  'beta-sandbox' );</code>
+<h2>DoVoid( paypal_credentials, auth_id, note, environment='beta-sandbox', ignore=false )</h2>
+<p> Voids a prior authorization (cancels it). You must set the environment variable appropriate to the current environment you are operating in ('beta-sandbox', 'sandbox' or 'live'). Like all of these PayPal API functions here in the Biz Helper, if you set the <em>ignore</em> parameter to true it will return a positive (true) on &quot;SUCCESS&quot; or &quot;SUCCESSWITHWARNING&quot; response codes. If you are doing multiple currencies, you will need to convert it all to the same currency using the <a href="country_helper.html">Country Helper</a>, which is provided as a parameter.</p>
+<code>// Assign some PayPal credentials:<br />
+<br />
+$credentials['username'] = &quot;my@paypal.com&quot;;<br />
+$credentials['password'] = &quot;abcdefg&quot;;<br />
+$credentials['signature'] = &quot;signature&quot;;<br />
+<br />
+// In this example, we only have two recipients. <br />
+<br />
+$response = DoVoid( $credentials, $auth_id, &quot;Refund for out of stock item&quot;,   'beta-sandbox' );</code>
+<h2>DoCapture( paypal_credentials, auth_id, amount, currency, invoice_id, note, environment='beta-sandbox', ignore=false )</h2>
+<p> You must set the environment variable appropriate to the current environment you are operating in ('beta-sandbox', 'sandbox' or 'live'). Like all of these PayPal API functions here in the Biz Helper, if you set the <em>ignore</em> parameter to true it will return a positive (true) on &quot;SUCCESS&quot; or &quot;SUCCESSWITHWARNING&quot; response codes. If you are doing multiple currencies, you will need to convert it all to the same currency using the <a href="country_helper.html">Country Helper</a>, which is provided as a parameter.</p>
+<code>// Assign some PayPal credentials:<br />
+<br />
+$credentials['username'] = &quot;my@paypal.com&quot;;<br />
+$credentials['password'] = &quot;abcdefg&quot;;<br />
+$credentials['signature'] = &quot;signature&quot;;<br />
+<br />
+// In this example, we only have two recipients. <br />
+<br />
+$response = DoCapture( $credentials, $auth_id, &quot;22.42&quot;, &quot;USD&quot;, &quot;Some ID&quot;, 'beta-sandbox' );</code>
+<h2> GetBalance( paypal_credentials, $environment='beta-sandbox', ignore=false )</h2>
+<p>Gets the balance of your PayPal account (not recipient ones).  You must set the environment variable appropriate to the current environment you are operating in ('beta-sandbox', 'sandbox' or 'live'). Like all of these PayPal API functions here in the Biz Helper, if you set the <em>ignore</em> parameter to true it will return a positive (true) on &quot;SUCCESS&quot; or &quot;SUCCESSWITHWARNING&quot; response codes. If you are doing multiple currencies, you will need to convert it all to the same currency using the <a href="country_helper.html">Country Helper</a>, which is provided as a parameter.</p>
+<code>// Assign some PayPal credentials:<br />
+<br />
+$credentials['username'] = &quot;my@paypal.com&quot;;<br />
+$credentials['password'] = &quot;abcdefg&quot;;<br />
+$credentials['signature'] = &quot;signature&quot;;<br />
+<br />
+// In this example, we only have two recipients. <br />
+<br />
+$response = GetBalance( $credentials,   'beta-sandbox' );</code>
+<h2>DoRefund( paypal_credentials, transactionID, refundType='Full', currency='USD', amount=NULL, memo=NULL, env='beta-sandbox', ignore=false ) </h2>
+<p> You must set the environment variable appropriate to the current environment you are operating in ('beta-sandbox', 'sandbox' or 'live'). Like all of these PayPal API functions here in the Biz Helper, if you set the <em>ignore</em> parameter to true it will return a positive (true) on &quot;SUCCESS&quot; or &quot;SUCCESSWITHWARNING&quot; response codes. If you are doing multiple currencies, you will need to convert it all to the same currency using the <a href="country_helper.html">Country Helper</a>, which is provided as a parameter.</p>
+<code>// Assign some PayPal credentials:<br />
+<br />
+$credentials['username'] = &quot;my@paypal.com&quot;;<br />
+$credentials['password'] = &quot;abcdefg&quot;;<br />
+$credentials['signature'] = &quot;signature&quot;;<br />
+<br />
+// In this example, we only have two recipients. <br />
+<br />
+$response = DoRefund( $credentials, $transaction_id, 'Partial', 'USD', '21.50', 'Partial refund for damaged item.', 'sandbox' );</code>
+<h2> GetTransactions( paypal_credentials, transactionID, startDateStr=NULL, endDateStr=NULL, environment='beta-sandbox', ignore=false )</h2>
+<p>In the PayPal API this is referred to as &quot;TransactionSearch&quot;. You must set the environment variable appropriate to the current environment you are operating in ('beta-sandbox', 'sandbox' or 'live'). Like all of these PayPal API functions here in the Biz Helper, if you set the <em>ignore</em> parameter to true it will return a positive (true) on &quot;SUCCESS&quot; or &quot;SUCCESSWITHWARNING&quot; response codes. If you are doing multiple currencies, you will need to convert it all to the same currency using the <a href="country_helper.html">Country Helper</a>, which is provided as a parameter.</p>
+<code>// Assign some PayPal credentials:<br />
+<br />
+$credentials['username'] = &quot;my@paypal.com&quot;;<br />
+$credentials['password'] = &quot;abcdefg&quot;;<br />
+$credentials['signature'] = &quot;signature&quot;;<br />
+<br />
+// In this example, we only have two recipients. <br />
+<br />
+$response = GetTransactions( $credentials, $transaction_id, strototime(&quot;-2 days&quot;), strtotime(&quot;now&quot;), 'live' );</code></div>
+<!-- END CONTENT -->
+
+
+<div id="footer">
+<p>
+Previous Topic:&nbsp;&nbsp; <a href="../libraries/zip.html">Zip Encoding Class</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="#top">Top of Page</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+<a href="../index.html">User Guide Home</a>&nbsp;&nbsp;&nbsp;&middot;&nbsp;&nbsp;
+Next Topic:&nbsp;&nbsp;<a href="compatibility_helper.html">Compatibility Helper</a></p>
+<p><a href="http://gudagi.net/herbigniter/">HerbIgniter</a> &nbsp;&middot;&nbsp; Copyright &#169; 2009 &nbsp;&middot;&nbsp; <a href="http://gudagi.com/">Gudagi</a></p>
+</div>
+
+</body>
+</html>

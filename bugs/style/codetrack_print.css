@@ -1,0 +1,15 @@
+
+/*************************************
+*                                    *
+*  Print stylesheet for CodeTrack.   *
+*                                    *
+*************************************/
+
+
+#navBar {
+	visibility: none;
+	display: hidden;
+}
+.quickForm {
+   background-color: #c0c0c0;
+}
