@@ -7,3 +7,7 @@ In the standard known as Model-View-Controller (MVC), things are organized for t
 You can't do it all in Flash. To create rich web applications (RIA), you need to pick a place to stand in a jungle of tools. The classier web developer peers out from a RoR or PHP environment, because the complete power of computing is available from that groundwork. The problem is, there are a dozen other tools necessary to complete user experience. How can one library provide a feature-rich developer environment, without being too open ended or missing key features?
 
 HerbIgniter is here to accomplish that by providing a streamlined model, a supportive graphical interface libraries to handle commonly needed components, and a succinct range of features to provide maximum configurability combined with ease of use.
+
+Author: H. Elwood Gilliland III
+
+Based on CodeIgniter
