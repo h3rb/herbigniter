@@ -9,4 +9,4 @@ You can't do it all in Flash. To create rich web applications (RIA), you need to
 HerbIgniter is here to accomplish that by providing a streamlined model, a supportive graphical interface libraries to handle commonly needed components, and a succinct range of features to provide maximum configurability combined with ease of use.
 
 Based on CodeIgniter
-Now hosted at http://loudruck.us/herbigniter
+Was once hosted at http://loudruck.us/herbigniter but is not anymore
